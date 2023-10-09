@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;400&display=swap');
+*{
+    margin: 0;
+    font-family: 'Lexend Deca', sans-serif;
+}
+/* HEADER */
+.titulo{
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 35px auto 40px auto;
+    margin: 20px;
+}
+/*  */
+.elementor-section-banner{
+    margin-bottom: 30px;
+}
+.elementor-element-banner img{
+    width: 100%;
+    height: auto;
+}
+.contenedor {
+    background-color: #333;
+    padding: 10px;
+
+  }
+  .navegacion {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 10px;
+  }
+  
+  .navegacion a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .navegacion a:hover {
+    background-color: #555;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .navegacion a:active{
+    background-color: #5AFA90;
+    color:black;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+/* cambias el inicio por el nosotros creas el id="nosotro"para mantener la uniformidad de la barra espero */
+#nosotros{
+    background-color: #5AFA90;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;    
+}
+/* QUIENES SOMOS */
+.elementor-section-about{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.elementor-container-about{
+    width: 900px;
+}
+.elementor-element-text-about h2{
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5;
+}
+/* NUESTRO EQUIPO */
+.elementor-section-team{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.elementor-container-team{
+    width: 750px;
+}
+.elementor-element-text-team h2{
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5;
+}
+/* MISION */
+.elementor-section-mission{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.elementor-container-mission{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1080px;
+}
+.elementor-element-information{
+    width: 476px;
+    height: auto;
+}
+.elementor-element-heading{
+    display: flex;
+    justify-content: center;
+}
+.elementor-element-heading h1{
+    font-size: 32px;
+    height: 50px;
+    margin-bottom: 15px;
+}
+.elementor-element-text{
+    display: flex;
+}
+.elementor-element-text h2{
+    font-weight: 400;
+    font-size: 18px;
+    text-align: justify;
+    line-height: 1.5;
+}
+.elementor-element-image{
+    width: 500px;
+}
+.elementor-element-image img{
+    border-radius: 15px;
+    width: 100%;
+}
+/* VISION */
+.elementor-section-vision{
+    display: flex;
+    justify-content: center;
+}
+.elementor-container-vision{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1080px;
+}
+/* SERVICIOS */
+.elementor-heading-service{
+    display: flex;
+    justify-content: center;
+    padding: 25px 0;
+    margin-top: 50px;
+}
+.elementor-heading-service h2{
+    font-size: 32px;
+    height: 50px;
+}
+.elementor-element-service{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.elementor-element-service-1{
+    display: flex;
+    padding: 0 15px;
+    padding-bottom: 20px;
+}
+.elementor-text-service-1{
+    width: 251px;
+    padding-left: 1.5rem;
+}
+.elementor-element-service-2{
+    display: flex;
+    padding: 0 15px;
+    padding-bottom: 20px;
+}
+.elementor-text-service-2{
+    width: 251px;
+    padding-left: 1.5rem;
+}
+.elementor-element-service-3{
+    display: flex;
+    padding: 0 15px;
+    padding-bottom: 20px;
+}
+.elementor-text-service-3{
+    width: 251px;
+    padding-left: 1.5rem;
+}
+.text-p-service{
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+}
+/* FOOTER */
+.element-section-footer{
+    margin-top: 200px;
+}
+.element-container-footer{
+    background-color: #51575c;
+    height: 100px;
+}
+.element-element-information-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+@media (max-width: 1080px) {
+    .elementor-container-mission, .elementor-container-vision{
+        flex-direction: column;
+    }
+}
+@media (max-width: 1080px) {
+    .elementor-element-image{
+        margin-bottom: 40px;
+        width: 400px;
+    }
+}
+@media (max-width: 490px) {
+    .elementor-element-information{
+        padding: 0 10px;
+        width: auto;
+    }
+}
+@media (max-width: 400px) {
+    .elementor-element-image{
+        padding: 10px 10px;
+        width: auto;
+    }
+}
+@media (max-width: 700px) {
+    .elementor-element-text-team{
+        padding: 0px 10px;
+    }
+}
+
+.ingreso{
+    display: flex;
+    justify-content: right;
+    padding: 10px;
+    margin: 10px;
+}
+
+.btn-login-registro{
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+    margin: 10px;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+.btn-login-registro:hover{
+    background-color: #5AFA90;
+    color: white;
+    transition: 0.5s;
+}
