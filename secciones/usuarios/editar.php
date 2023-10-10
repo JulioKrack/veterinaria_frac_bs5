@@ -2,8 +2,26 @@
 <?php
 include("../../config/bd.php");
 
+if(isset($_GET['id'])){
+    $id_persona = $_GET['id'];
+    $sql = "SELECT * FROM persona WHERE id = '$id_persona'";
+    $result = $conn->query($sql);
+    $registro = $result->fetch_assoc();
+    $id = $registro['id'];
+    $nombre = $registro['nombre'];
+    $dni = $registro['dni'];
+    $correo = $registro['correo'];
+    $usuario = $registro['usuario'];
+    $contrasenia = $registro['contrasenia'];
+    $telefono = $registro['telefono'];
+    $rol = $registro['rol'];
+    $estado = $registro['estado'];
+
+}
+
 // Verificar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id= $_POST['id'];
     $nombre = $_POST["nombre"];
     $dni = $_POST["dni"];
     $correo = $_POST["correo"];
@@ -13,64 +31,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rol = $_POST["rol"];
     $estado = $_POST["estado"];
 
-    $sql = "INSERT INTO persona (id, nombre, dni, correo, usuario, contrasenia, telefono, rol, estado )
-    VALUES (null, '$nombre', '$dni', '$correo', '$usuario', '$contrasenia', '$telefono', '$rol', '$estado')";
+    $sql = "UPDATE persona SET nombre = '$nombre', dni = '$dni', correo = '$correo', usuario = '$usuario', contrasenia = '$contrasenia', telefono = '$telefono', rol = '$rol', estado = '$estado' WHERE id = '$id';";
+    
     if ($conn->query($sql) === TRUE) {
         echo "Reservation created successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-
-    
 }
 
-
-// Cerrar la conexión después de obtener los datos
 $conn->close();
-
 ?>
-
     <div class="card">
         <div class="card-header">
-            <p class="card-text">Formulario para crear clientes</p>
+            <p class="card-text">Formulario para crear una reserva.</p>
         </div>
         <div class="card-body">
     <!-- Formulario para insertar datos -->
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="mb-3">
+                  <label for="id" class="form-label">ID:</label>
+                  <input type="text" readonly value="<?php echo $id; ?>"
+                    class="form-control" readonly name="id" id="id" aria-describedby="helpId" placeholder="">
+                <div class="mb-3">
                   <label for="nombre" class="form-label">Nombre Completo:</label>
-                  <input type="text"
+                  <input type="text"  value="<?php echo $nombre; ?>"
                     class="form-control" name="nombre" id="nombre" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
                   <label for="dni" class="form-label">DNI:</label>
-                  <input type="text"
+                  <input type="text" value="<?php echo $dni; ?>"
                     class="form-control" name="dni" id="dni" aria-describedby="helpId" >
                 </div>  
                 <div class="mb-3">
                   <label for="correo" class="form-label">Correo:</label>
-                  <input type="text"
+                  <input type="text" value="<?php echo $correo; ?>"
                     class="form-control" name="correo" id="correo" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
                   <label for="usuario" class="form-label">Usuario:</label>
-                  <input type="text"
+                  <input type="text" value="<?php echo $usuario; ?>"
                     class="form-control" name="usuario" id="usuario" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
                   <label for="contrasenia" class="form-label">Contraseña:</label>
-                  <input type="text"
+                  <input type="text" value="<?php echo $contrasenia; ?>"
                     class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
                   <label for="telefono" class="form-label">Teléfono:</label>
-                  <input type="text"
+                  <input type="text" value="<?php echo $telefono; ?>"
                     class="form-control" name="telefono" id="telefono" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
                     <label for="rol" class="form-label">Rol:</label>
                     <select class="form-select form-select-lg" name="rol" id="rol">
+                        <option selected value="<?php echo $rol; ?>"><?php echo $rol; ?></option>
                         <option selected value="cliente">Cliente</option>
                         <option value="administrador">Administrador</option>
                         <option value="veterinario">Veterinario</option>
@@ -83,15 +100,17 @@ $conn->close();
                         <option value="2">Inactivo</option>
                     </select>
                 </div>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a href="index.php" class="btn btn-secondary">Regresar</a>
+
+            </form>
                 
         </div>
         <div class="card-footer text-muted">
-            <!-- <h5 class="card-title">Crear Reserva</h5>
-            <p class="card-text">Formulario para crear una reserva.</p> -->
-            <input type="submit" class="btn btn-primary">Crear</input>
-            
-            <a href="index.php" class="btn btn-secondary">Regresar</a>
+
+
         </div>
     </div>
+
 
 <?php include("../../plantillas/footer.php")?>

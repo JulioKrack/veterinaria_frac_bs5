@@ -33,7 +33,7 @@ $conn->close();
 
     <div class="card">
         <div class="card-header">
-            <p class="card-text">Formulario para crear clientes</p>
+            <p class="card-text">Formulario para crear un usuario</p>
         </div>
         <div class="card-body">
     <!-- Formulario para insertar datos -->
