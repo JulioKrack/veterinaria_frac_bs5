@@ -22,7 +22,7 @@ if(isset($_GET['id'])){
         echo "Reservation deleted successfully";
         header("Location:./index.php");
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: Este usuario esta asignado con otras tablas " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -71,6 +71,7 @@ $conn->close();
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
+                    </td>
                     </tr>
             <?php endforeach; ?>
             </table>

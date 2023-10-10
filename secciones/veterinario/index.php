@@ -1,8 +1,6 @@
 <?php
 include("../../config/bd.php");
 
-
-// Función para obtener todas las reservas de citas desde la base de datos
 function getDatosVeterinario($conn) {
     $sql = "SELECT v.id, v.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, p.estado 
     FROM veterinario v
@@ -16,23 +14,23 @@ function getDatosVeterinario($conn) {
     }
 }
 
-if(isset($_GET['id'])){
+if (isset($_GET['id'])) {
     $id_veterinario = $_GET['id'];
-    $sql = "DELETE FROM reservadecitas WHERE id = '$id_veterinario'";
+    $sql = "DELETE FROM veterinario WHERE id = '$id_veterinario'";
+
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation deleted successfully";
+        echo "Veterinario deleted successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
-// Obtener todas las reservas existentes
 $reservations = getDatosVeterinario($conn);
 
-// Cerrar la conexión después de obtener los datos
 $conn->close();
 ?>
+
 <?php include("../../plantillas/header.php")?>
 
 <br />
@@ -74,6 +72,7 @@ $conn->close();
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
+
                     </tr>
             <?php endforeach; ?>
             </table>

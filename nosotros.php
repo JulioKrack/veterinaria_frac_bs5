@@ -9,14 +9,15 @@
 <body>
     <header>
         <div class="ingreso">
-            <a class="btn-login-registro" href="login_html.html">Iniciar sesion / Registrarse</a>
+            <a class="btn-login-registro" href="login.php">Iniciar sesion / Registrarse</a>
         </div>
         <h1 class="titulo">veterinaria frac</h1>
         <div class="contenedor">
             <nav class="navegacion">
-                <a class="enlace" id="inicio" href="index.php">Inicio</a>
-                <a class="enlace" href="#">Citas</a>
-                <a class="enlace" id="nosotros" href="nosotros.php">Nosotros</a>
+                    <a class="enlace" id="inicio" href="index.php">Inicio</a>
+                    <a class="enlace" href="login.php">Citas</a>
+                    <!-- <a class="enlace" href="#">Productos</a> -->
+                    <a class="enlace" href="nosotros.php">Nosotros</a>
             </nav>
         </div>
     </header>
