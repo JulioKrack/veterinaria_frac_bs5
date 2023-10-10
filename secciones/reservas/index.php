@@ -13,6 +13,17 @@ function getAllReservations($conn) {
     }
 }
 
+if(isset($_GET['id'])){
+    $id_reserva = $_GET['id'];
+    $sql = "DELETE FROM reservadecitas WHERE id = '$id_reserva'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Reservation deleted successfully";
+        header("Location:./index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
 // Obtener todas las reservas existentes
 $reservations = getAllReservations($conn);
 
@@ -50,7 +61,7 @@ $conn->close();
                     <td><?php echo $reservation['id_cliente']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
-                        <a href="eliminar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
                     </tr>
             <?php endforeach; ?>
             </table>

@@ -17,6 +17,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veterinaria frac</title>
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -34,7 +35,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
       <a class="nav-link active" href="<?php echo $url_base?>secciones/reservas/index.php" aria-current="page">Empleados</a>
       <a class="nav-link active" href="<#" aria-current="page">Clientes</a>
       <a class="nav-link active" href="#" aria-current="page">Reservas</a>
-      <!-- <a class="nav-link active" href="<?php echo $url_base?>secciones/reservas/eliminar.php" aria-current="page">Eliminar</a> -->
+      <a class="nav-link active" href="<?php echo $url_base?>" aria-current="page">Cerrar sesión</a>
     </nav>
   </header>
   <main>
