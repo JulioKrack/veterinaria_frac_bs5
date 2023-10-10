@@ -14,6 +14,18 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
   </script>
+
+  <Script>
+    $(document).ready(function () {
+      $('#tabla_id').DataTable({
+        "pageLength": 5,
+        lenghtMenu: [5, 10, 15, 20],
+        "language":{
+          "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
+      });
+    });
+  </Script>
 </body>
 
 </html>

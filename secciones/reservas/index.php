@@ -3,7 +3,7 @@ include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getAllReservations($conn) {
-    $sql = "SELECT * FROM reserva_de_citas";
+    $sql = "SELECT id,fechareserva,hora,asunto,id_cliente FROM reservadecitas";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -21,32 +21,44 @@ $conn->close();
 ?>
 <?php include("../../plantillas/header.php")?>
 
+<br />
+<br />
+<br />
 <div class="card">
     <div class="card-header">
-        Reservas
+        Reserva de citas 
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
             <table class="table table-bordered">
             <tr>
                 <th>ID Reserva</th>
-                <th>ID Cliente</th>
                 <th>Fecha Reservada</th>
+                <th>Hora Reservada</th>
+                <th>Asunto</th>
+                <th>ID Cliente</th>
+                <th>Acciones</th>
+
             </tr>
 
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
-                    <td><?php echo $reservation['id_reserva']; ?></td>
+                    <td><?php echo $reservation['id']; ?></td>
+                    <td><?php echo $reservation['fechareserva']; ?></td>
+                    <td><?php echo $reservation['hora']; ?></td>
+                    <td><?php echo $reservation['asunto']; ?></td>
                     <td><?php echo $reservation['id_cliente']; ?></td>
-                    <td><?php echo $reservation['fecha_reservada']; ?></td>
-                </tr>
+                    <td>
+                        <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
+                        <a href="eliminar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
+                    </tr>
             <?php endforeach; ?>
             </table>
         </div>
         
     </div>
     <div class="card-footer text-muted">
-        Footer
+    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear cita</a>
     </div>
 </div>
 

@@ -2,7 +2,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "veterinaria_frac";
+    $dbname = "veterinariafrac";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
