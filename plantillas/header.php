@@ -1,14 +1,8 @@
 <?php
 session_start();
 $url_base="http://localhost/veterinaria_frac_bs5/";
-// if(!isset($_SESSION['usuario'])){
-//     header("Location:".$url_base."login.php");
-// }// else{
-//     if($_SESSION['usuario']['tipo_usuario']!="admin"){
-//         header("Location: ".$url_base."login.php");
-//     }
-// }
 ?>
+
 <!doctype html>
 <html lang="en">
 

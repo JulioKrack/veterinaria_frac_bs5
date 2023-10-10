@@ -17,8 +17,8 @@ function getDatosVeterinario($conn) {
 }
 
 if(isset($_GET['id'])){
-    $id_reserva = $_GET['id'];
-    $sql = "DELETE FROM reservadecitas WHERE id = '$id_reserva'";
+    $id_veterinario = $_GET['id'];
+    $sql = "DELETE FROM reservadecitas WHERE id = '$id_veterinario'";
     if ($conn->query($sql) === TRUE) {
         echo "Reservation deleted successfully";
         header("Location:./index.php");
