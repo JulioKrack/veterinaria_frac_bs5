@@ -22,19 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Reservation created successfully";
+        header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    function obtenerDatos($conn) {
-        $sql = "SELECT id,fechareserva,hora,asunto,id_cliente FROM reservadecitas";
-        $result = $conn->query($sql);
-    
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return [];
-        }
-    }
+
     
 }
 function obtenerCliente($conn) {

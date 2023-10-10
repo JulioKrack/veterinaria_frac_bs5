@@ -3,7 +3,7 @@ include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getAllReservations($conn) {
-    $sql = "SELECT id,fechareserva,hora,asunto,id_cliente FROM reservadecitas";
+    $sql = "SELECT id,fechareserva,hora,asunto,id_cliente,id_veterinario FROM reservadecitas";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -48,6 +48,7 @@ $conn->close();
                 <th>Hora Reservada</th>
                 <th>Asunto</th>
                 <th>ID Cliente</th>
+                <th>ID Veterinario</th>
                 <th>Acciones</th>
 
             </tr>
@@ -59,6 +60,7 @@ $conn->close();
                     <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
                     <td><?php echo $reservation['id_cliente']; ?></td>
+                    <td><?php echo $reservation['id_veterinario']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
