@@ -20,8 +20,9 @@ if (isset($_GET['id'])) {
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $asunto = $_POST['asunto'];
-    $estado = 2;  // Set the state to 2
+    $estado = 2;
     $id_cliente = $_POST['id_cliente'];
+    $id_reserva = $_POST['id'];  // Retrieve the id_reserva
 
     // Update the reservation
     $sql = "UPDATE reservadecitas 
@@ -31,13 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Reservation updated successfully";
-        // Redirect to the appropriate page after successful update
         header("Location:./bienvenido.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
-
 // Function to obtain veterinarian IDs
 function obtenerVeterinario($conn) {
     $sql = "SELECT id FROM veterinario";
@@ -93,27 +92,19 @@ $conn->close();
   <script>
     // Function to update form fields based on the selected ID
     function updateFormFields() {
-        var selectedId = document.getElementById('id').value;
-        document.getElementById('id').value = selectedId;
-  // Rest of the code remains the same
+    var selectedId = document.getElementById('id').value;
+    document.getElementById('id').value = selectedId;
+    // document.getElementById('id_reserva').value = selectedId;  // Add this line
 
-
-      // Iterate through the reservations array
-      for (var i = 0; i < reservations.length; i++) {
+    for (var i = 0; i < reservations.length; i++) {
         if (reservations[i].id == selectedId) {
-          // Update the form fields with the corresponding values
-          document.getElementById('fechareserva').value = reservations[i].fechareserva;
-          document.getElementById('hora').value = reservations[i].hora;
-        //   document.getElementById('asunto').value = reservations[i].asunto;
-        //   document.getElementById('estado').value = reservations[i].estado;
-        //   document.getElementById('id_cliente').value = reservations[i].id_cliente;
-        //   document.getElementById('id_administrador').value = reservations[i].id_administrador;
-          document.getElementById('id_veterinario').value = reservations[i].id_veterinario;
-          break;
+            document.getElementById('fechareserva').value = reservations[i].fechareserva;
+            document.getElementById('hora').value = reservations[i].hora;
+            document.getElementById('id_veterinario').value = reservations[i].id_veterinario;
+            break;
         }
     }
 }
-
     // Array to store reservations data (replace with actual data)
     var reservations = <?php echo json_encode($ci); ?>;
   </script>
