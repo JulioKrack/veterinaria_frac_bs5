@@ -53,7 +53,7 @@ $conn->close();
                 <div class="mb-3">
                   <label for="id" class="form-label">ID:</label>
                   <input type="text" readonly value="<?php echo $id; ?>"
-                    class="form-control" readonly name="id" id="id" aria-describedby="helpId" placeholder="">
+                    class="form-control" readonly name="id" id="id" aria-describedby="helpId">
                 <div class="mb-3">
                   <label for="nombre" class="form-label">Nombre Completo:</label>
                   <input type="text"  value="<?php echo $nombre; ?>"

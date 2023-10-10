@@ -15,7 +15,7 @@
         <div class="contenedor">
             <nav class="navegacion">
                 <a class="enlace" id="inicio" href="index.php">Inicio</a>
-                <a class="enlace" href="#">Citas</a>
+                <a class="enlace" href="login.php">Citas</a>
                 <!-- <a class="enlace" href="#">Productos</a> -->
                 <a class="enlace" href="nosotros.php">Nosotros</a>
             </nav>

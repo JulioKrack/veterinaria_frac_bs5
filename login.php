@@ -1,6 +1,5 @@
 <?php
 session_start();
-print_r($_POST);
     include("./config/bd.php");
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $usuario = $_POST['usuario'];

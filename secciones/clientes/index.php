@@ -1,9 +1,12 @@
 <?php
 include("../../config/bd.php");
 
+
 // Función para obtener todas las reservas de citas desde la base de datos
-function getAllReservations($conn) {
-    $sql = "SELECT id,fechareserva,hora,asunto,id_cliente,id_veterinario FROM reservadecitas";
+function getDatosCliente($conn) {
+    $sql = "SELECT c.id, c.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, p.estado 
+    FROM cliente c
+    INNER JOIN persona p ON c.id_persona = p.id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -14,10 +17,10 @@ function getAllReservations($conn) {
 }
 
 if(isset($_GET['id'])){
-    $id_reserva = $_GET['id'];
-    $sql = "DELETE FROM reservadecitas WHERE id = '$id_reserva'";
+    $id_cliente= $_GET['id'];
+    $sql = "DELETE FROM cliente WHERE id = '$id_cliente'";
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation deleted successfully";
+        echo "Cliente deleted successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -25,7 +28,7 @@ if(isset($_GET['id'])){
 }
 
 // Obtener todas las reservas existentes
-$reservations = getAllReservations($conn);
+$reservations = getDatosCliente($conn);
 
 // Cerrar la conexión después de obtener los datos
 $conn->close();
@@ -37,30 +40,37 @@ $conn->close();
 <br />
 <div class="card">
     <div class="card-header">
-        Reserva de citas 
+        Personas
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
             <table class="table table-bordered">
-            <tr>
-                <th>ID Reserva</th>
-                <th>Fecha Reservada</th>
-                <th>Hora Reservada</th>
-                <th>Asunto</th>
+            <tr>    
                 <th>ID Cliente</th>
-                <th>ID Veterinario</th>
-                <th>Acciones</th>
+                <th>ID Persona</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Correo</th>
+                <th>Usuario</th>
+                <th>Contraseña</th>
+                <th>Teléfono</th>
+                <th>Rol</th>
+                <th>Estado</th>
 
             </tr>
 
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
                     <td><?php echo $reservation['id']; ?></td>
-                    <td><?php echo $reservation['fechareserva']; ?></td>
-                    <td><?php echo $reservation['hora']; ?></td>
-                    <td><?php echo $reservation['asunto']; ?></td>
-                    <td><?php echo $reservation['id_cliente']; ?></td>
-                    <td><?php echo $reservation['id_veterinario']; ?></td>
+                    <td><?php echo $reservation['id_persona']; ?></td>
+                    <td><?php echo $reservation['nombre']; ?></td>
+                    <td><?php echo $reservation['dni']; ?></td>
+                    <td><?php echo $reservation['correo']; ?></td>
+                    <td><?php echo $reservation['usuario']; ?></td>
+                    <td><?php echo $reservation['contrasenia']; ?></td>
+                    <td><?php echo $reservation['telefono']; ?></td>
+                    <td><?php echo $reservation['rol']; ?></td>
+                    <td><?php echo $reservation['estado']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
@@ -71,7 +81,7 @@ $conn->close();
         
     </div>
     <div class="card-footer text-muted">
-    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear cita</a>
+    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Persona</a>
     </div>
 </div>
 
