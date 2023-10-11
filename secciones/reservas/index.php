@@ -2,7 +2,7 @@
 include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
-function getAllReservations($conn) {
+function getReservaciones($conn) {
     $sql = "SELECT id,fechareserva,hora,asunto,id_cliente,id_veterinario, estado FROM reservadecitas";
     $result = $conn->query($sql);
 
@@ -25,7 +25,7 @@ if(isset($_GET['id'])){
 }
 
 // Obtener todas las reservas existentes
-$reservations = getAllReservations($conn);
+$reservations = getReservaciones($conn);
 
 // Cerrar la conexión después de obtener los datos
 $conn->close();

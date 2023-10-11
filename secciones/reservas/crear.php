@@ -146,7 +146,7 @@ $conn->close();
            
         </div>
         <div class="card-footer text-muted">
-            <input type="submit" class="btn btn-primary">Crear</input>
+            <input type="submit" class="btn btn-primary" value="Crear"></input>
             
             <a href="index.php" class="btn btn-secondary">Regresar</a>
         </div>
