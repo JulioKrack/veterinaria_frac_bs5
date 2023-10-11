@@ -85,8 +85,8 @@ $conn->close();
                     <label for="rol" class="form-label">Rol:</label>
                     <select class="form-select form-select-lg" name="rol" id="rol">
                         <option selected value="<?php echo $rol; ?>"><?php echo $rol; ?></option>
-                        <option selected value="cliente">Cliente</option>
-                        <option value="administrador">Administrador</option>
+                        <option selected value="Cliente">Cliente</option>
+                        <option value="Administrador">Administrador</option>
                         <option value="veterinario">Veterinario</option>
                     </select>
                 </div>

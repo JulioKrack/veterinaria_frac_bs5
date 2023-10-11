@@ -13,8 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_veterinario = $_POST['id_veterinario'];
     $id_cliente = $_POST['id_cliente']; 
 
-    // Validar datos (puedes agregar más validaciones según tus necesidades)
-    // $fecha_hora_reserva = $fecha_reservada . ' ' . $hora;
 
     // Insertar datos en la base de datos
     $sql = "INSERT INTO reservadecitas (id, fechareserva, hora, asunto, estado, id_administrador, id_veterinario, id_cliente )
@@ -148,8 +146,6 @@ $conn->close();
            
         </div>
         <div class="card-footer text-muted">
-            <!-- <h5 class="card-title">Crear Reserva</h5>
-            <p class="card-text">Formulario para crear una reserva.</p> -->
             <input type="submit" class="btn btn-primary">Crear</input>
             
             <a href="index.php" class="btn btn-secondary">Regresar</a>
