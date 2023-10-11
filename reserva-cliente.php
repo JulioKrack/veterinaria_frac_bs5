@@ -30,6 +30,7 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $asunto = $_POST['asunto'];
     $estado = 2;
+    // $rol='Cliente';
     $id_cliente = $_POST['id_cliente'];
     $id_reserva = $_POST['id'];  
     // Genera la reserva al cambiar el estado 1=disponible a ocupado

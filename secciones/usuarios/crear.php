@@ -15,8 +15,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "INSERT INTO persona (id, nombre, dni, correo, usuario, contrasenia, telefono, rol, estado )
     VALUES (null, '$nombre', '$dni', '$correo', '$usuario', '$contrasenia', '$telefono', '$rol', '$estado')";
+    
+    $sql2= "INSERT INTO cliente (id, id_persona) VALUES (null, LAST_INSERT_ID());";
+    $sql3= "INSERT INTO administrador (id, id_persona) VALUES (null, LAST_INSERT_ID());";
+    $sql4= "INSERT INTO veterinario (id, id_persona) VALUES (null,LAST_INSERT_ID());";
+
     if ($conn->query($sql) === TRUE) {
-        header("Location:./index.php");
+        if($rol == "Cliente" ){
+            $conn->query($sql2);
+            header("Location:./index.php");
+        }
+        else if($rol == "Administrador"){
+            $conn->query($sql3);
+            header("Location:./index.php");
+        }
+        else if($rol == "Veterinario"){
+            $conn->query($sql4);
+            header("Location:./index.php");
+        }
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }  
@@ -25,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 
 ?>
-
     <div class="card">
         <div class="card-header">
             <p class="card-text">Formulario para crear un usuario</p>
@@ -68,7 +83,7 @@ $conn->close();
                     <select class="form-select form-select-lg" name="rol" id="rol">
                         <option selected value="Cliente">Cliente</option>
                         <option value="Administrador">Administrador</option>
-                        <option value="veterinario">Veterinario</option>
+                        <option value="Veterinario">Veterinario</option>
                     </select>
                 </div>
                 <div class="mb-3">
