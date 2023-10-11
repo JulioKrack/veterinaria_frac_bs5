@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2023 a las 13:54:00
+-- Tiempo de generación: 11-10-2023 a las 06:20:17
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -37,7 +37,8 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`id`, `id_persona`) VALUES
-(1, 1);
+(1, 1),
+(4, 14);
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`id`, `id_persona`) VALUES
 (1, 3),
-(3, 7);
+(4, 7),
+(5, 11);
 
 -- --------------------------------------------------------
 
@@ -105,9 +107,13 @@ INSERT INTO `persona` (`id`, `nombre`, `dni`, `correo`, `usuario`, `contrasenia`
 (1, 'Admin', 87654321, 'admin@admin.com', 'admin', '123456', 987654321, 'Administrador', 1),
 (3, 'cliente1', 81234567, 'cliente1@cliente.com', 'cliente', '123456', 987654322, 'cliente', 1),
 (4, 'veterinario1', 87654421, 'veterinario1@veterinario.com', 'veterinario', '123456', 988654321, 'Veterinario', 1),
-(5, 'gojo', 321312, 'gojo@utp.edu.pe', 'gojo1', '123456', 312312312, 'cliente', 1),
 (7, 'cliente2', 12312312, 'cliente2@cliente.com', 'cliente2', '123456', 213123123, 'cliente', 1),
-(8, 'prueba1234', 123432, 'veterinario@gmail.com', 'veterinario4', '123456', 123456, 'veterinario', 1);
+(10, 'prueba11', 1231231, 'prueba11', 'prueba11', '123456', 951842699, 'veterinario', 1),
+(11, 'prueba12', 12312312, 'prueba12', 'prueba12', '123456', 951842699, 'veterinario', 1),
+(12, 'cliente33', 1231212, 'prueba@qewqeq.com', 'cliente5', '123456', 951842699, 'cliente', 1),
+(13, 'cliente44', 1231231, 'sdadasdsa', 'cliente6', '123456', 123131, 'cliente', 1),
+(14, 'admin2', 123123, 'admin2@admin2.com', 'admin2', '123456', 12312312, 'Administrador', 1),
+(15, 'veterinario3', 12312, 'vet', 'veterinario3', '123456', 321312, 'veterinario', 1);
 
 -- --------------------------------------------------------
 
@@ -135,7 +141,11 @@ INSERT INTO `reservadecitas` (`id`, `fechareserva`, `hora`, `asunto`, `estado`, 
 (3, '2023-10-16', '3:00', 'aeiou', 2, 1, 1, 1),
 (5, '2023-10-16', '3:00', 'bañobaño', 2, 1, 1, 1),
 (7, '2023-10-16', '3:00', 'aeiou', 2, 1, 1, 1),
-(8, '2023-10-27', '18:00', 'pruebaprueba', 2, 1, 1, 1);
+(8, '2023-10-27', '18:00', 'vacunaaaaaaaa', 2, 1, 1, 1),
+(11, '2023-10-17', '9:00', 'baño', 2, 1, 1, 1),
+(12, '2023-10-26', '16:00', '123', 2, 1, 1, 1),
+(13, '2023-10-01', '13:00', 'vacunaaaaaaaawwww', 1, 1, 1, 1),
+(14, '2023-10-31', '12:00', '', 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -154,7 +164,7 @@ CREATE TABLE `veterinario` (
 
 INSERT INTO `veterinario` (`id`, `id_persona`) VALUES
 (1, 4),
-(2, 8);
+(3, 11);
 
 --
 -- Índices para tablas volcadas
@@ -213,13 +223,13 @@ ALTER TABLE `veterinario`
 -- AUTO_INCREMENT de la tabla `administrador`
 --
 ALTER TABLE `administrador`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `mascota`
@@ -231,19 +241,19 @@ ALTER TABLE `mascota`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `reservadecitas`
 --
 ALTER TABLE `reservadecitas`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `veterinario`
 --
 ALTER TABLE `veterinario`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
