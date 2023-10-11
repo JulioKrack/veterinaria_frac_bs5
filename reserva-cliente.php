@@ -3,18 +3,27 @@ include("config/bd.php");
 
 // obtenemos información de reservas
 if (isset($_GET['id'])) {
-    $id_reserva = $_GET['id'];
-    $sql = "SELECT * FROM reservadecitas WHERE id = '$id_reserva'";
-    $result = $conn->query($sql);
-    $registro = $result->fetch_assoc();
-    $id = $registro['id'];
-    $fecha_reservada = $registro['fechareserva'];
-    $hora = $registro['hora'];
-    $asunto = $registro['asunto'];
-    $estado = $registro['estado'];
-    $id_administrador = $registro['id_administrador'];
-    $id_veterinario = $registro['id_veterinario'];
-    $id_cliente = $registro['id_cliente'];
+  $id_reserva = $_GET['id'];
+
+  // Modificamos la consulta para obtener solo reservas con estado 1
+  $sql = "SELECT * FROM reservadecitas WHERE id = '$id_reserva' AND estado = 1;";
+  $result = $conn->query($sql);
+
+  if ($result && $result->num_rows > 0) {
+      $registro = $result->fetch_assoc();
+      $id = $registro['id'];
+      $fecha_reservada = $registro['fechareserva'];
+      $hora = $registro['hora'];
+      $asunto = $registro['asunto'];
+      $estado = $registro['estado'];
+      $id_administrador = $registro['id_administrador'];
+      $id_veterinario = $registro['id_veterinario'];
+      $id_cliente = $registro['id_cliente'];
+  } else {
+      // Si no se encuentra una reserva con estado 1, redirigimos o manejas de alguna forma
+      header("Location:./bienvenido.php");
+      exit();
+  }
 }
 
 // verificamos si se envio el formulario
@@ -48,7 +57,7 @@ function obtenerVeterinario($conn) {
 }
 // Se crea una funcion para obtener las reservas
 function obtenerReservas($conn) {
-    $sql = "SELECT * FROM reservadecitas";
+    $sql = "SELECT * FROM reservadecitas Where estado = 1;" ;
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -80,18 +89,19 @@ $conn->close();
   <script>
     // Creamos una función para actualizar los campos del formulario
     function updateFormFields() {
-    let selectedId = document.getElementById('id').value;
-    document.getElementById('id').value = selectedId;
+        let selectedId = document.getElementById('id').value;
 
-    for (let i = 0; i < reservations.length; i++) {
-        if (reservations[i].id == selectedId) {
-            document.getElementById('fechareserva').value = reservations[i].fechareserva;
-            document.getElementById('hora').value = reservations[i].hora;
-            document.getElementById('id_veterinario').value = reservations[i].id_veterinario;
-            break;
+        for (let i = 0; i < reservations.length; i++) {
+            if (reservations[i].id == selectedId) {
+                document.getElementById('fechareserva').value = reservations[i].fechareserva;
+                document.getElementById('hora').value = reservations[i].hora;
+                document.getElementById('id_veterinario').value = reservations[i].id_veterinario;
+                document.getElementById('asunto').value = reservations[i].asunto;
+                document.getElementById('id_cliente').value = reservations[i].id_cliente;
+                break;
+            }
         }
     }
-}
     // Creamos una variable para almacenar las reservas
     let reservations = <?php echo json_encode($ci); ?>;
   </script>
@@ -104,13 +114,14 @@ $conn->close();
         <label for="id" class="form-label">ID Cita:</label>
         <select class="form-select form-select-lg" name="id" id="id" onchange="updateFormFields()">
           <?php foreach ($ci as $cit) { ?>
+            <option hidden="hidden" value="<?php echo $cit['id'] ?>"><?php echo $cit['id'] ?></option>
             <option value="<?php echo $cit['id'] ?>"><?php echo $cit['id'] ?></option>
           <?php } ?>
         </select>
       </div>
       <div class="mb-3">
         <label for="fechareserva" class="form-label">Fecha:</label>
-        <input type="date" value="<?php echo $fecha_reservada; ?>" class="form-control" name="fechareserva"
+        <input type="date" readonly value="<?php echo $fecha_reservada; ?>" class="form-control" name="fechareserva"
           id="fechareserva" aria-describedby="helpId" placeholder="">
       </div>
               
@@ -121,11 +132,10 @@ $conn->close();
             <option value="<?php echo $vete['id'] ?>"><?php echo $vete['id'] ?></option>
           <?php } ?>
         </select>
-      <div class="mb-3">
-        <label for="hora" class="form-label">Hora:</label>
-        <input type="text" value="<?php echo $hora; ?>" class="form-control" name="hora"
-          id="hora" aria-describedby="helpId" placeholder="">
-      </div>
+        <div class="mb-3">
+          <label for="hora" class="form-label">Hora:</label>
+          <input type="time" value="<?php echo $hora; ?>" class="form-control" name="hora" id="hora" aria-describedby="helpId" placeholder="Hora" readonly>
+        </div>
       <div class="mb-3">
         <label for="asunto" class="form-label">Asunto:</label>
         <input type="text" value="" class="form-control" name="asunto"
@@ -133,10 +143,10 @@ $conn->close();
       </div>
       <div class="mb-3">
         <label for="id_cliente" class="form-label">ID Cliente:</label>
-        <input type="text" value="<?php echo $id_cliente; ?>" class="form-control" name="id_cliente"
-          id="id_cliente" aria-describedby="helpId" placeholder="">
+        <input type="text" value="1" class="form-control" name="id_cliente" readonly
+          id="id_cliente" aria-describedby="helpId" placeholder="Ingrese su código">
       </div>
-      <button type="submit" class="btn btn-primary">Actualizar</button>
+      <button type="submit" class="btn btn-primary">Reservar</button>
       <a href="bienvenido.php" class="btn btn-secondary">Regresar</a>
     </form>
 
