@@ -4,6 +4,7 @@ include("../../config/bd.php");
 
 // Verificar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    print_r($_POST);
     $id_cliente = null;
     $fecha_reservada = $_POST['fechareserva'];
     $hora = $_POST['hora'];
@@ -143,12 +144,13 @@ $conn->close();
                         <?php } ?>
                     </select>
                 </div>
+                <input type="submit" class="btn btn-primary" value="Crear"></input>
+                <a href="index.php" class="btn btn-secondary">Regresar</a>
+            </form>
            
         </div>
         <div class="card-footer text-muted">
-            <input type="submit" class="btn btn-primary" value="Crear"></input>
-            
-            <a href="index.php" class="btn btn-secondary">Regresar</a>
+
         </div>
     </div>
 

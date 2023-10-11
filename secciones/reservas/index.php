@@ -17,7 +17,6 @@ if(isset($_GET['id'])){
     $id_reserva = $_GET['id'];
     $sql = "DELETE FROM reservadecitas WHERE id = '$id_reserva'";
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation deleted successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -38,6 +37,7 @@ $conn->close();
 <div class="card">
     <div class="card-header">
         Reserva de citas 
+        <a href="./crear.php" class="btn btn-primary">Crear cita</a>
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
@@ -75,7 +75,7 @@ $conn->close();
         
     </div>
     <div class="card-footer text-muted">
-    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear cita</a>
+
     </div>
 </div>
 
