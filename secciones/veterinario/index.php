@@ -16,16 +16,33 @@ function getDatosVeterinario($conn) {
 
 if (isset($_GET['id'])) {
     $id_veterinario = $_GET['id'];
-    $sql = "DELETE FROM veterinario WHERE id = '$id_veterinario'";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Veterinario deleted successfully";
-        header("Location:./index.php");
+    // Obtener el id_persona
+    $id_persona_query = "SELECT id_persona FROM veterinario WHERE id = '$id_veterinario'";
+    $result_persona = $conn->query($id_persona_query);
+
+    if ($result_persona->num_rows > 0) {
+        $row = $result_persona->fetch_assoc();
+        $id_persona = $row['id_persona'];
+
+        // Eliminar veterinario
+        $sql = "DELETE FROM veterinario WHERE id = '$id_veterinario'";
+        if ($conn->query($sql) === TRUE) {
+            // Eliminar persona
+            $sql2 = "DELETE FROM persona WHERE id = '$id_persona'";
+            if ($conn->query($sql2) === TRUE) {
+                header("Location: ./index.php");
+                exit();
+            } else {
+                echo "Error al eliminar persona: " . $conn->error;
+            }
+        } else {
+            echo "Error al eliminar cliente: " . $conn->error;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "No se encontró el id_persona asociado al cliente.";
     }
 }
-
 $reservations = getDatosVeterinario($conn);
 
 $conn->close();
