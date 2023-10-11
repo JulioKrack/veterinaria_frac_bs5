@@ -16,7 +16,6 @@
             <nav class="navegacion">
                 <a class="enlace" id="inicio" href="index.php">Inicio</a>
                 <a class="enlace" href="login.php">Citas</a>
-                <!-- <a class="enlace" href="#">Productos</a> -->
                 <a class="enlace" href="nosotros.php">Nosotros</a>
             </nav>
         </div>
@@ -30,17 +29,21 @@
                 <div class="servicio">
                     <a href="#"><img src="img/medico.jpg" alt="medico" class="servicio-img"></a>
                     <h3>Atención medica</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+                    <br/>
+                    <p>Comprometidos con el bienestar de tu mascota las 24 horas, los 6 días de la semana: Calidad y Cuidado sin límites.</p>
                 </div>
                 <div class="servicio">
                     <a href="#"><img src="img/banado.png" alt="medico" class="servicio-img"></a>
                     <h3>Baño para mascotas</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+                    <p>Tu mascota se merece lo mejor, por eso regálale una visita al veterinario y un baño completo en la Clínica Veterinaria Frac por un precio insuperable.</p>
+                    <br/>
+                    <p>La visita al veterinario le servirá a u mascota y a ti para saber su peso y su estado físico, así como recomendaciones que te dará el veterinario para el cuidado de tu engreid@.</p>
                 </div>
                 <div class="servicio">
                     <a href="#"><img src="img/productos.png" alt="medico" class="servicio-img"></a>
                     <h3>Venta de productos</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+                    <br/>
+                    <p>¡No busques más que Veterinaria Frac Shop! En nuestra sede, tenemos los mejores productos para tus mascotas.</p>
                 </div>
 
         </section>

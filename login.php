@@ -51,11 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
-
 <body>
-  <header>
-    <!-- place navbar here -->
-  </header>
+
   <main class="container">
     <div class="row">
         <div class="col-md-4      ">

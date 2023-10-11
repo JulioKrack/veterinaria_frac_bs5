@@ -19,7 +19,6 @@ if(isset($_GET['id'])){
     $id_persona= $_GET['id'];
     $sql = "DELETE FROM persona WHERE id = '$id_persona'";
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation deleted successfully";
         header("Location:./index.php");
     } else {
         echo "Error: Este usuario esta asignado con otras tablas " . $sql . "<br>" . $conn->error;
@@ -39,7 +38,7 @@ $conn->close();
 <br />
 <div class="card">
     <div class="card-header">
-        Personas
+        Usuarios
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
@@ -54,7 +53,6 @@ $conn->close();
                 <th>Teléfono</th>
                 <th>Rol</th>
                 <th>Estado</th>
-
             </tr>
 
             <?php foreach ($reservations as $reservation) : ?>
@@ -75,8 +73,7 @@ $conn->close();
                     </tr>
             <?php endforeach; ?>
             </table>
-        </div>
-        
+        </div>  
     </div>
     <div class="card-footer text-muted">
     <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Persona</a>

@@ -16,9 +16,7 @@ if(isset($_GET['id'])){
     $telefono = $registro['telefono'];
     $rol = $registro['rol'];
     $estado = $registro['estado'];
-
 }
-
 // Verificar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id= $_POST['id'];
@@ -34,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "UPDATE persona SET nombre = '$nombre', dni = '$dni', correo = '$correo', usuario = '$usuario', contrasenia = '$contrasenia', telefono = '$telefono', rol = '$rol', estado = '$estado' WHERE id = '$id';";
     
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation created successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -45,7 +42,7 @@ $conn->close();
 ?>
     <div class="card">
         <div class="card-header">
-            <p class="card-text">Formulario para crear una reserva.</p>
+            <p class="card-text">Formulario para editar un usuario.</p>
         </div>
         <div class="card-body">
     <!-- Formulario para insertar datos -->
@@ -102,15 +99,9 @@ $conn->close();
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
                 <a href="index.php" class="btn btn-secondary">Regresar</a>
-
-            </form>
-                
+            </form>      
         </div>
-        <div class="card-footer text-muted">
-
-
-        </div>
+        <div class="card-footer text-muted"></div>
     </div>
-
 
 <?php include("../../plantillas/footer.php")?>

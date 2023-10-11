@@ -16,16 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO persona (id, nombre, dni, correo, usuario, contrasenia, telefono, rol, estado )
     VALUES (null, '$nombre', '$dni', '$correo', '$usuario', '$contrasenia', '$telefono', '$rol', '$estado')";
     if ($conn->query($sql) === TRUE) {
-        echo "Reservation created successfully";
         header("Location:./index.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    
+    }  
 }
-
-
 // Cerrar la conexión después de obtener los datos
 $conn->close();
 
@@ -83,15 +78,13 @@ $conn->close();
                         <option value="2">Inactivo</option>
                     </select>
                 </div>
-                
+                <div class="card-footer text-muted">
+                    <input type="submit" class="btn btn-primary" value="Crear"></input>      
+                    <a href="index.php" class="btn btn-secondary">Regresar</a>
+                </div>
+            </form>
         </div>
-        <div class="card-footer text-muted">
-            <!-- <h5 class="card-title">Crear Reserva</h5>
-            <p class="card-text">Formulario para crear una reserva.</p> -->
-            <input type="submit" class="btn btn-primary">Crear</input>
-            
-            <a href="index.php" class="btn btn-secondary">Regresar</a>
-        </div>
+
     </div>
 
 <?php include("../../plantillas/footer.php")?>
