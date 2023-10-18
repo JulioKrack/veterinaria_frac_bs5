@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['logeado'] = true;
             header("Location:./secciones/reservas/index.php"); // Redireccionar a la página de administrador
             exit();
-        } elseif ($row['rol'] === 'cliente') {
+        } elseif ($row['rol'] === 'Cliente') {
             $_SESSION['logeado'] = true;
             header("Location: ./bienvenido.php"); // Redireccionar a la página de cliente
             exit();
