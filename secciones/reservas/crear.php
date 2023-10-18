@@ -10,15 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hora = $_POST['hora'];
     $asunto = $_POST['asunto'];
     $estado = $_POST['estado'];
-    $id_administrador = $_POST['id_administrador'];
-    $id_veterinario = $_POST['id_veterinario'];
-    $id_cliente = $_POST['id_cliente']; 
+    $id_administrador = $_POST['administrador'];
+    $id_veterinario = $_POST['veterinario'];
+    $id_cliente = $_POST['cliente']; 
 
 
     // Insertar datos en la base de datos
     $sql = "INSERT INTO reservadecitas (id, fechareserva, hora, asunto, estado, id_administrador, id_veterinario, id_cliente )
-            VALUES (NULL,'$fecha_reservada','$hora' ,'$asunto', '$estado', '$id_administrador', '$id_veterinario','$id_cliente')";
-
+            VALUES (NULL,'$fecha_reservada','$hora' ,'$asunto', '$estado', (SELECT id FROM administrador WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_administrador')), (SELECT id FROM veterinario WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_veterinario')), (SELECT id FROM cliente WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_cliente')) )";
+    // (SELECT id FROM cliente WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_cliente'))";
     if ($conn->query($sql) === TRUE) {
         echo "Reservation created successfully";
         header("Location:./index.php");
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 }
 function obtenerCliente($conn) {
-    $sql = "SELECT id FROM cliente";
+    $sql = "SELECT id,(SELECT nombre FROM persona WHERE id=id_persona) as nombre FROM cliente";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -39,7 +39,7 @@ function obtenerCliente($conn) {
     }
 }
 function obtenerAdministrador($conn) {
-    $sql = "SELECT id FROM administrador";
+    $sql = "SELECT id,(SELECT nombre FROM persona WHERE id=id_persona) as nombre FROM administrador";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -49,7 +49,7 @@ function obtenerAdministrador($conn) {
     }
 }
 function obtenerVeterinario($conn) {
-    $sql = "SELECT id FROM veterinario";
+    $sql = "SELECT id,(SELECT nombre FROM persona WHERE id=id_persona) as nombre FROM veterinario";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -117,30 +117,31 @@ $conn->close();
                 </div>
                 <div class="mb-3">
                   <label for="estado" class="form-label">Estado:</label>
-                  <input type="text"
-                    class="form-control" name="estado" id="estado" aria-describedby="helpId" placeholder="">
+                  <input type="text" readonly
+                    class="form-control" name="estado" id="estado" value="1" aria-describedby="helpId" placeholder="">
                 </div>
                 <div class="mb-3">
-                    <label for="id_cliente" class="form-label">ID Cliente:</label>
-                    <select class="form-select form-select-lg" name="id_cliente" id="id_cliente">
+                    <label for="cliente" class="form-label">Cliente:</label>
+                    <select class="form-select form-select-lg" name="cliente" id="cliente">
+                        <option  selected value=" "></option>
                         <?php foreach ($cli as $clie) {?>
-                        <option value="<?php echo $clie['id']?>"><?php echo $clie['id']?></option>
+                        <option value="<?php echo $clie['nombre']?>"><?php echo $clie['nombre']?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="id_administrador" class="form-label">ID Administrador:</label>
-                    <select class="form-select form-select-lg" name="id_administrador" id="id_administrador">
+                    <label for="administrador" class="form-label">Administrador:</label>
+                    <select class="form-select form-select-lg" name="administrador" id="administrador">
                         <?php foreach ($adm as $admi) {?>
-                        <option value="<?php echo $admi['id']?>"><?php echo $admi['id']?></option>
+                        <option value="<?php echo $admi['nombre']?>"><?php echo $admi['nombre']?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="id_veterinario" class="form-label">ID Veterinario:</label>
-                    <select class="form-select form-select-lg" name="id_veterinario" id="id_veterinario">
+                    <label for="veterinario" class="form-label">Veterinario:</label>
+                    <select class="form-select form-select-lg" name="veterinario" id="veterinario">
                         <?php foreach ($vet as $vete) {?>
-                        <option value="<?php echo $vete['id']?>"><?php echo $vete['id']?></option>
+                        <option value="<?php echo $vete['nombre']?>"><?php echo $vete['nombre']?></option>
                         <?php } ?>
                     </select>
                 </div>
