@@ -3,7 +3,7 @@ include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getReservaciones($conn) {
-    $sql = "SELECT id,fechareserva,hora,asunto,id_cliente,id_veterinario, estado FROM reservadecitas";
+    $sql = "SELECT id,fechareserva,hora,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, estado FROM reservadecitas";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -47,8 +47,8 @@ $conn->close();
                 <th>Fecha Reservada</th>
                 <th>Hora Reservada</th>
                 <th>Asunto</th>
-                <th>ID Cliente</th>
-                <th>ID Veterinario</th>
+                <th>Cliente</th>
+                <th>Veterinario</th>
                 <th>Estado</th>
                 <th>Acciones</th>
 
@@ -60,8 +60,8 @@ $conn->close();
                     <td><?php echo $reservation['fechareserva']; ?></td>
                     <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
-                    <td><?php echo $reservation['id_cliente']; ?></td>
-                    <td><?php echo $reservation['id_veterinario']; ?></td>
+                    <td><?php echo $reservation['clientes']; ?></td>
+                    <td><?php echo $reservation['veterinario']; ?></td>
                     <td><?php echo $reservation['estado']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
