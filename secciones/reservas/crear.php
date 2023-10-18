@@ -49,7 +49,7 @@ function obtenerAdministrador($conn) {
     }
 }
 function obtenerVeterinario($conn) {
-    $sql = "SELECT id,(SELECT nombre FROM persona WHERE id=id_persona) as nombre FROM veterinario";
+    $sql = "SELECT id,(SELECT nombre FROM persona WHERE id=id_persona AND estado='1') as nombre FROM veterinario";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -110,17 +110,17 @@ $conn->close();
                         <option value="23:00">23:00</option>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div  hidden class="mb-3">
                   <label for="asunto" class="form-label">Asunto:</label>
                   <input type="text"
                     class="form-control" name="asunto" id="asunto" aria-describedby="helpId" placeholder="">
                 </div>
-                <div class="mb-3">
+                <div  hidden class="mb-3">
                   <label for="estado" class="form-label">Estado:</label>
                   <input type="text" readonly
                     class="form-control" name="estado" id="estado" value="1" aria-describedby="helpId" placeholder="">
                 </div>
-                <div class="mb-3">
+                <div  hidden class="mb-3">
                     <label for="cliente" class="form-label">Cliente:</label>
                     <select class="form-select form-select-lg" name="cliente" id="cliente">
                         <option  selected value=" "></option>
@@ -129,7 +129,7 @@ $conn->close();
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div hidden class="mb-3">
                     <label for="administrador" class="form-label">Administrador:</label>
                     <select class="form-select form-select-lg" name="administrador" id="administrador">
                         <?php foreach ($adm as $admi) {?>
@@ -137,7 +137,7 @@ $conn->close();
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div  class="mb-3">
                     <label for="veterinario" class="form-label">Veterinario:</label>
                     <select class="form-select form-select-lg" name="veterinario" id="veterinario">
                         <?php foreach ($vet as $vete) {?>

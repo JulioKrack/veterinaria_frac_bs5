@@ -51,7 +51,6 @@ $conn->close();
                 <th>Veterinario</th>
                 <th>Estado</th>
                 <th>Acciones</th>
-
             </tr>
 
             <?php foreach ($reservations as $reservation) : ?>

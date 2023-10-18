@@ -94,7 +94,8 @@ $conn->close();
                     <label for="estado" class="form-label">Estado:</label>
                     <select class="form-select form-select-lg" name="estado" id="estado">
                         <option selected value="1">Disponible</option>
-                        <option value="2">Inactivo</option>
+                        <option value="2">Descanson</option>
+                        <option value="3">Baja</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar</button>

@@ -2,7 +2,7 @@
 include("../../config/bd.php");
 
 function getDatosVeterinario($conn) {
-    $sql = "SELECT v.id, v.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, p.estado 
+    $sql = "SELECT v.id, v.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, (CASE WHEN p.estado = 1 THEN 'Activo' WHEN p.estado = 2 THEN 'Descanso/vacaciones' ELSE 'Baja' END) AS estados 
     FROM veterinario v
     INNER JOIN persona p ON v.id_persona = p.id";
     $result = $conn->query($sql);
@@ -85,11 +85,10 @@ $conn->close();
                     <td><?php echo $reservation['contrasenia']; ?></td>
                     <td><?php echo $reservation['telefono']; ?></td>
                     <td><?php echo $reservation['rol']; ?></td>
-                    <td><?php echo $reservation['estado']; ?></td>
+                    <td><?php echo $reservation['estados']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>
-
                     </tr>
             <?php endforeach; ?>
             </table>
@@ -97,7 +96,7 @@ $conn->close();
         
     </div>
     <div class="card-footer text-muted">
-    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Empleado</a>
+    <a hidden href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Empleado</a>
     </div>
 </div>
 

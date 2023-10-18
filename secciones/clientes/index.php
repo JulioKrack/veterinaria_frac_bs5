@@ -101,7 +101,7 @@ $conn->close();
         
     </div>
     <div class="card-footer text-muted">
-    <a href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Persona</a>
+    <a hidden href="crear.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Crear Persona</a>
     </div>
 </div>
 
