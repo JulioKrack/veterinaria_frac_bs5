@@ -20,14 +20,33 @@
     <div class="container">
 
         <div class="m-5">
-            <h1>Reserva tu cita en nuestra veterinaria</h1>
-        
+            <h1><center>Seleccione un servicio</center></h1>
+        </div>
 
-        <a name="" id="" class="btn btn-primary" href="reserva-cliente.php" role="button">Reservar Cita </a>
-        </div> 
+
+        <div class="principal">
+            <div class="serv1 m-4">
+                <h2><center>Recervación de citas</center></h2> <br>
+                <img src="img/serv1.png" alt="servicio1" class="imgserv1" width="200px">
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center" href="reserva-cliente.php" role="button">Reservar Cita </a>
+            </div>
+        
+            <div class="serv2 m-4">
+                <h2><center>Tienda virtual</center></h2> <br>
+                <img src="img/serv2.png" alt="servicio1" width="200px" >
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="#" role="button">Comprar articulos </a>
+            </div>
+        </div>
+
+
+
+        <div class="m-4  d-flex justify-content-center">
+            <?php include("plantillas/footer.php"); ?>
+        </div>
+         
     </div>
 
-    <?php include("plantillas/footer.php"); ?>
+    
 </body>
 </html>
 
