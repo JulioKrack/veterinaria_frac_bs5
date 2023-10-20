@@ -7,7 +7,9 @@ function getDatosVeterinario($conn) {
     INNER JOIN persona p ON v.id_persona = p.id";
     $result = $conn->query($sql);
 
-    
+
+
+    // prueba1
     if ($result->num_rows > 0) {
         return $result->fetch_all(MYSQLI_ASSOC);
     } else {
