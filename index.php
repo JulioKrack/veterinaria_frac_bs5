@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="ingreso">
-            <a class="btn-login-registro" href="login.php">Iniciar sesion / Registrarse</a>
+            <a class="btn-login-registro" href="login2.php">Iniciar sesion / Registrarse</a>
         </div>
         <h1 class="titulo">veterinaria frac</h1>
         <div class="contenedor">
