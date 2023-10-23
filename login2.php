@@ -25,13 +25,13 @@
                 </div>
             </div>
             <div class="contenedor_login-register">
-                <form action="" class="formulario_login">
+                <form action="./login-cliente.php" method="POST" class="formulario_login">
                     <h2>Iniciar sesión</h2>
-                    <input type="text" placeholder="Correo Electrónico">
-                    <input type="password" placeholder="Contraseña">
+                    <input type="text" placeholder="usuario" name="usuario" id="usuario">
+                    <input type="password" placeholder="Contraseña" name="contrasenia" id="contrasenia">
                     <button type="submit">Entrar</button>
                 </form>
-                <form action="./registro_usuario.php" method= "POST" class="formulario_register">
+                <form action="./registro_usuario.php" method="POST" class="formulario_register">
                     <h2>Regístrarse</h2>
                     <input type="text" placeholder="Nombre Completo" name="nombre">
                     <input type="number" placeholder="DNI" name="dni">
