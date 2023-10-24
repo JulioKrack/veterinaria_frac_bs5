@@ -26,6 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['logeado'] = true;
             header("Location: ./bienvenido.php"); // Redireccionar a la página de cliente
             exit();
+        } elseif ($row['rol'] === 'Veterinario') {
+            $_SESSION['logeado'] = true;
+            header("Location: ./veterinario.php"); // Redireccionar a la página de empleado
+            exit();
         } else {
             $mensaje = "Rol desconocido";
         }
