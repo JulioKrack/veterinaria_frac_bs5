@@ -27,8 +27,8 @@
             <div class="contenedor_login-register">
                 <form action="" class="formulario_login">
                     <h2>Iniciar sesión</h2>
-                    <input type="text" placeholder="Correo Electrónico">
-                    <input type="password" placeholder="Contraseña">
+                    <input type="text" placeholder="Correo Electrónico" >
+                    <input type="password" placeholder="Contraseña" >
                     <button type="submit">Entrar</button>
                 </form>
                 <form action="./registro_usuario.php" method= "POST" class="formulario_register">
