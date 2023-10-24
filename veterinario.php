@@ -1,7 +1,7 @@
 <?php
 include("./config/bd.php");
 function getReservaciones($conn) {
-    $sql = "SELECT id,fechareserva,hora,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' WHEN estado=3 THEN 'Atentido' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas";
+    $sql = "SELECT id,fechareserva,hora,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' WHEN estado=3 THEN 'Atentido' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas where estado=2 or estado=3";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -60,8 +60,8 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
     <!-- place navbar here -->
     <h1 class="d-flex justify-content-center bg-info">Bienvenido</h1>
     <nav class="nav justify-content-center  ">
-      <a class="nav-link active" href="<?php echo $url_base?>secciones/usuarios/crear.php" aria-current="page">Crear Usuario</a>
-      <a class="nav-link active" href="<?php echo $url_base?>" aria-current="page">Cerrar sesión</a>
+        <a class="nav-link active" aria-current="page" href="<?php echo $url_base?>veterinario.php">Inicio</a>
+        <a class="nav-link active" href="<?php echo $url_base?>" aria-current="page">Cerrar sesión</a>
     </nav>
   </header>
   <main>
@@ -78,7 +78,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
         <div class="table-responsive-sm">
             <table class="table table-bordered">
             <tr>
-                <th>ID Reserva</th>
+                <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
                 <th>Hora Reservada</th>
                 <th>Asunto</th>
@@ -90,7 +90,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
 
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
-                    <td><?php echo $reservation['id']; ?></td>
+                    <td hidden><?php echo $reservation['id']; ?></td>
                     <td><?php echo $reservation['fechareserva']; ?></td>
                     <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
@@ -98,7 +98,6 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
                     <td><?php echo $reservation['veterinario']; ?></td>
                     <td><?php echo $reservation['estado1']; ?></td>
                     <td>
-                        <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="veterinario.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Atendido</a>
                     </td>
                     </tr>
@@ -112,5 +111,6 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
 
     </div>
 </div>
+
 
 <?php include("./plantillas/footer.php")?>
