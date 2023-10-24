@@ -17,6 +17,11 @@
 
 </head>
 <body>
+        <div class="m-4 d-flex justify-content-end">
+            <a href="index.php" class="btn btn-danger">
+                <i class="bi bi-power"></i> Cerrar sesión
+            </a>
+        </div>
     <div class="container">
 
         <div class="m-5">
@@ -40,13 +45,11 @@
 
 
 
-        <div class="m-4  d-flex justify-content-center">
-            <?php include("plantillas/footer.php"); ?>
-        </div>
-         
+        <?php include("plantillas/footer.php"); ?>
+
     </div>
 
-    
+
 </body>
 </html>
 
