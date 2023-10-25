@@ -43,7 +43,7 @@ $conn->close();
         <div class="table-responsive-sm">
             <table class="table table-bordered">
             <tr>
-                <th>ID Reserva</th>
+                <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
                 <th>Hora Reservada</th>
                 <th>Asunto</th>
@@ -55,7 +55,7 @@ $conn->close();
 
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
-                    <td><?php echo $reservation['id']; ?></td>
+                    <td hidden><?php echo $reservation['id']; ?></td>
                     <td><?php echo $reservation['fechareserva']; ?></td>
                     <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
