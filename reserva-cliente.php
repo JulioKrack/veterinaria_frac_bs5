@@ -90,7 +90,10 @@ $conn->close();
       <h1><center>Reservación de citas</center></h1>
     </header>
 
-<script>
+    <script>
+    // Creamos una variable para almacenar las reservas fuera de la función
+    let reservations = <?php echo json_encode($ci); ?>;
+
     // Creamos una función para actualizar los campos del formulario
     function updateFormFields() {
         let selectedDate = document.getElementById('fecha_disponible').value;
@@ -99,14 +102,12 @@ $conn->close();
             if (reservations[i].fechareserva === selectedDate) {
                 document.getElementById('id').value = reservations[i].id;
                 document.getElementById('hora').value = reservations[i].hora;
-                document.getElementById('id_veterinario').value = reservations[i].id_veterinario;
+                document.getElementById('veterinario').value = reservations[i].veterinario;
                 document.getElementById('id_cliente').value = reservations[i].id_cliente;
                 break;
             }
         }
     }
-    // Creamos una variable para almacenar las reservas
-    let reservations = <?php echo json_encode($ci); ?>;
 </script>
 
 <body>
@@ -129,7 +130,7 @@ $conn->close();
         <input type="time" readonly class="form-control" name="hora" id="hora" aria-describedby="helpId" placeholder="Hora">
     </div>
     <div class="mb-3">
-        <label for="id_veterinario" class="form-label">ID Veterinario:</label>
+        <label for="id_veterinario" class="form-label">Veterinario:</label>
         <input type="text" readonly class="form-control" name="id_veterinario" id="id_veterinario" aria-describedby="helpId">
     </div>
     <div class="mb-3">
