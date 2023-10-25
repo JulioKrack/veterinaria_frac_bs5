@@ -39,7 +39,7 @@
             <div class="serv2 m-4">
                 <h2><center>Tienda virtual</center></h2> <br>
                 <img src="img/serv2.png" alt="servicio1" width="200px" >
-                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="#" role="button">Comprar articulos </a>
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="productos.php" role="button">Comprar articulos </a>
             </div>
         </div>
 
