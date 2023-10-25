@@ -72,7 +72,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
 <div class="card">
     <div class="card-header">
         Reserva de citas 
-        <a href="./crear.php" class="btn btn-primary">Crear cita</a>
+        <a hidden href="./crear.php" class="btn btn-primary">Crear cita</a>
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
@@ -81,8 +81,8 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
                 <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
                 <th>Hora Reservada</th>
-                <th>Asunto</th>
-                <th>Cliente</th>
+                <th>Descripcion</th>
+                <th hidden>Cliente</th>
                 <th>Veterinario</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -94,7 +94,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
                     <td><?php echo $reservation['fechareserva']; ?></td>
                     <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
-                    <td><?php echo $reservation['clientes']; ?></td>
+                    <td hidden ><?php echo $reservation['clientes']; ?></td>
                     <td><?php echo $reservation['veterinario']; ?></td>
                     <td><?php echo $reservation['estado1']; ?></td>
                     <td>
