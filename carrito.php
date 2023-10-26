@@ -1,4 +1,4 @@
-<?php require_once "config/conexion.php";
+<?php require_once "config/conexion2.php";
 require_once "config/config.php";
 ?>
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ require_once "config/config.php";
         </nav>
     </div>
     <!-- Header-->
-    <a href="index.php" class="btn btn-primary">Volver a la página de inicio</a>
+    <a href="productos.php" class="btn btn-primary">Volver a carrito</a>
 
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
