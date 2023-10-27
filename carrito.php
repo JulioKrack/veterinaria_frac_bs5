@@ -1,4 +1,4 @@
-<?php require_once "config/conexion.php";
+<?php require_once "config/conexion2.php";
 require_once "config/config.php";
 ?>
 <!DOCTYPE html>

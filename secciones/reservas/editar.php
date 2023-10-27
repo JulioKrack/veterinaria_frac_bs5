@@ -113,7 +113,7 @@ $conn->close();
                 </div>
                 <div class="mb-3">
                   <label for="id_veterinario" class="form-label">ID Veterinario:</label>
-                  <input type="text" value="<?php echo $id_veterinario; ?>"
+                  <input id="name" type="text" value="<?php echo $id_veterinario; ?>"
                     class="form-control" name="id_veterinario" id="id_veterinario" aria-describedby="helpId" placeholder="">
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar</button>                
