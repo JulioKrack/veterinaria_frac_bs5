@@ -107,7 +107,7 @@ include("includes/header.php"); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="p_rebajado">Precio Rebajado</label>
-                                <input id="p_rebajado" class="form-control" type="text" name="p_rebajado" placeholder="Precio Rebajado" required>
+                                <input id="p_rebajado" class="form-control" type="text" name="p_rebajado" placeholder="Precio Rebajado" >
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -125,7 +125,7 @@ include("includes/header.php"); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="imagen">Foto</label>
-                                <input type="file" class="form-control" name="foto" required>
+                                <input type="file" class="form-control" name="foto">
                             </div>
                         </div>
                     </div>

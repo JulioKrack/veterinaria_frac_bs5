@@ -24,7 +24,9 @@ require_once "config/config.php";
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./">VeterinariaFrac</a>
+                <a class="navbar-brand" href="#"><h2>VeterinariaFrac</h2></a>
+
+                <a href="productos.php" class="btn btn-primary">Volver a carrito</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -32,7 +34,7 @@ require_once "config/config.php";
         </nav>
     </div>
     <!-- Header-->
-    <a href="index.php" class="btn btn-primary">Volver a la página de inicio</a>
+    
 
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">

@@ -1,5 +1,5 @@
 <?php
-require_once "config/conexion.php";
+require_once "config/conexion2.php";
 if (isset($_POST)) {
     if ($_POST['action'] == 'buscar') {
         $array['datos'] = array();
