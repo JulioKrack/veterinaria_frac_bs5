@@ -1,4 +1,5 @@
-<?php require_once "config/conexion2.php";
+<?php 
+require_once "config/conexion2.php";
 require_once "config/config.php";
 ?>
 <!DOCTYPE html>
@@ -17,7 +18,23 @@ require_once "config/config.php";
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="assets/css/styles.css" rel="stylesheet" />
     <link href="assets/css/estilos.css" rel="stylesheet" />
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
 </head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <body>
     <!-- Navigation-->
@@ -68,7 +85,9 @@ require_once "config/config.php";
                 <div class="col-md-5 ms-auto">
                     <h4>Total a Pagar: <span id="total_pagar">0.00</span></h4>
                     <div class="d-grid gap-2">
+
                         <div id="paypal-button-container"></div>
+                        
                         <button class="btn btn-warning" type="button" id="btnVaciar">Vaciar Carrito</button>
                     </div>
                 </div>
@@ -85,8 +104,9 @@ require_once "config/config.php";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
+
     <script src="assets/js/scripts.js"></script>
+
     <script>
         mostrarCarrito();
 
@@ -119,6 +139,10 @@ require_once "config/config.php";
                             });
                             $('#tblCarrito').html(html);
                             $('#total_pagar').text(res.total);
+
+
+
+                            
                             paypal.Buttons({
                                 style: {
                                     color: 'blue',
@@ -148,6 +172,7 @@ require_once "config/config.php";
                             console.log(error);
                         }
                     });
+
                 }
             }
         }

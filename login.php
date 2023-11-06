@@ -10,6 +10,15 @@
     </head>
     
 <body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <main>
         <div class="contenedor_todo">
             <div class="caja_trasera">
@@ -27,18 +36,18 @@
             <div class="contenedor_login-register">
                 <form action="./login-cliente.php" method="POST" class="formulario_login">
                     <h2>Iniciar sesión</h2>
-                    <input type="text" placeholder="usuario" name="usuario" id="usuario">
-                    <input type="password" placeholder="Contraseña" name="contrasenia" id="contrasenia">
+                    <input type="text" placeholder="usuario" name="usuario" id="usuario" required>
+                    <input type="password" placeholder="Contraseña" name="contrasenia" id="contrasenia" required>
                     <button type="submit">Entrar</button>
                 </form>
                 <form action="./registro_usuario.php" method="POST" class="formulario_register">
                     <h2>Regístrarse</h2>
-                    <input type="text" placeholder="Nombre Completo" name="nombre">
+                    <input type="text" placeholder="Nombre Completo" name="nombre" required>
                     <input type="number" placeholder="DNI" name="dni">
-                    <input type="number" placeholder="telefono" name="telefono">
-                    <input type="email" placeholder="Correo Electrónico" name="correo">
-                    <input type="text" placeholder="Usuario" name="usuario">
-                    <input type="password" placeholder="Contraseña" name="contrasenia">
+                    <input type="number" placeholder="telefono" name="telefono" required>
+                    <input type="email" placeholder="Correo Electrónico" name="correo" required>
+                    <input type="text" placeholder="Usuario" name="usuario" required>
+                    <input type="password" placeholder="Contraseña" name="contrasenia" required>
                     <button type="submit">Registrarse</button>
                 </form>
             </div>
