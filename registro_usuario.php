@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         if($rol == "Cliente" ){
             $conn->query($sql2);
-            header("Location:./login2.php");
+            header("Location:./login.php");
         }
         
     } else {
