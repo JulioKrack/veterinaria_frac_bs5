@@ -43,7 +43,7 @@
                             <a href="#" class="nav-link" category="<?php echo $data['categoria']; ?>"><?php echo $data['categoria']; ?></a>
                         <?php } ?>
 
-                        <a href="admin/index.php" class="nav-link text-info" category="all"> Administrador</a>
+                        <!-- <a href="admin/index.php" class="nav-link text-info" category="all"> Administrador</a> -->
                         <a href="index.php" class="nav-link text-info" category="all"> Salir</a>
                     </ul>
                 </div>
