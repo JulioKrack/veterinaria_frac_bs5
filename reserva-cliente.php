@@ -129,7 +129,7 @@ $conn->close();
         <label for="hora" class="form-label">Hora:</label>
         <input type="time" readonly class="form-control" name="hora" id="hora" aria-describedby="helpId" placeholder="Hora">
     </div> -->
-    <div class="mb-3" >
+    <div class="mb-3" hidden>
         <label for="id_veterinario" class="form-label">Veterinario:</label>
         <input type="text" readonly class="form-control" name="id_veterinario" id="id_veterinario" aria-describedby="helpId">
     </div>
