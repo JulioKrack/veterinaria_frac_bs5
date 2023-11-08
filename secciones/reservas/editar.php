@@ -9,7 +9,6 @@ if(isset($_GET['id'])){
     $registro = $result->fetch_assoc();
     $id = $registro['id'];
     $fecha_reservada = $registro['fechareserva'];
-    $hora = $registro['hora'];
     $asunto = $registro['asunto'];
     $estado = $registro['estado'];
     $id_administrador = $registro['id_administrador'];
@@ -22,14 +21,13 @@ if(isset($_GET['id'])){
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id= $_POST['id'];
     $fecha_reservada = $_POST['fechareserva'];
-    $hora = $_POST['hora'];
     $asunto = $_POST['asunto'];
     $estado = $_POST['estado'];
     $id_administrador = $_POST['id_administrador'];
     $id_veterinario = $_POST['id_veterinario'];
     $id_cliente = $_POST['id_cliente']; 
 
-    $sql = "UPDATE reservadecitas SET fechareserva = '$fecha_reservada', hora = '$hora',
+    $sql = "UPDATE reservadecitas SET fechareserva = '$fecha_reservada',
     asunto = '$asunto', estado = '$estado',
     id_veterinario = '$id_veterinario' WHERE id = '$id'; "  ;
 
@@ -57,10 +55,10 @@ $conn->close();
                 </div>
                 <div class="mb-3">
                   <label for="fechareserva" class="form-label">Fecha:</label>
-                  <input type="date" value="<?php echo $fecha_reservada; ?>"
+                  <input type="datetime" value="<?php echo $fecha_reservada; ?>"
                     class="form-control" name="fechareserva" id="fechareserva" aria-describedby="helpId" placeholder="">
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="hora" class="form-label">Hora:</label>
                     <select class="form-select form-select-lg" name="hora" id="hora">
                         <option selected value="<?php echo $hora; ?>"><?php echo $hora; ?></option>
@@ -89,7 +87,7 @@ $conn->close();
                         <option value="22:00">22:00</option>
                         <option value="23:00">23:00</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="mb-3">
                   <label for="asunto" class="form-label">Asunto:</label>
                   <input type="text" value="<?php echo $asunto; ?>"

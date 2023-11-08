@@ -41,6 +41,11 @@
                 <img src="img/serv2.png" alt="servicio1" width="200px" >
                 <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="productos.php" role="button">Comprar articulos </a>
             </div>
+            <div class="serv2 m-4">
+                <h2><center>Registrar Mascota</center></h2> <br>
+                <img src="img/serv4.png"  alt="servicio1" width="200px" >
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="registrar-mascota.php" role="button">Registrar mascota</a>
+            </div>
         </div>
 
 
