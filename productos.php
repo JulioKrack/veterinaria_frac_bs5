@@ -44,7 +44,8 @@
                         <?php } ?>
 
                         <!-- <a href="admin/index.php" class="nav-link text-info" category="all"> Administrador</a> -->
-                        <a href="index.php" class="nav-link text-info" category="all"> Salir</a>
+                        <a href="bienvenido.php" class="nav-link " category="all"> Regresar</a>
+                        <a href="index.php" class="nav-link text-info btn-primary text-white" category="all"> Cerrar sesión</a>
                     </ul>
                 </div>
             </div>
