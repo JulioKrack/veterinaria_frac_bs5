@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     print_r($_POST);
     $id_cliente = null;
     $fecha_reservada = $_POST['fechareserva'];
-    $hora = $_POST['hora'];
     $asunto = $_POST['asunto'];
     $estado = $_POST['estado'];
     $id_administrador = $_POST['administrador'];
@@ -16,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Insertar datos en la base de datos
-    $sql = "INSERT INTO reservadecitas (id, fechareserva, hora, asunto, estado, id_administrador, id_veterinario, id_cliente )
-            VALUES (NULL,'$fecha_reservada','$hora' ,'$asunto', '$estado', (SELECT id FROM administrador WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_administrador')), (SELECT id FROM veterinario WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_veterinario')), (SELECT id FROM cliente WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_cliente')) )";
+    $sql = "INSERT INTO reservadecitas (id, fechareserva, asunto, estado, id_administrador, id_veterinario, id_cliente )
+            VALUES (NULL,'$fecha_reservada','$asunto', '$estado', (SELECT id FROM administrador WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_administrador')), (SELECT id FROM veterinario WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_veterinario')), (SELECT id FROM cliente WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_cliente')) )";
     // (SELECT id FROM cliente WHERE id_persona = (SELECT id FROM persona WHERE nombre = '$id_cliente'))";
     if ($conn->query($sql) === TRUE) {
         echo "Reservation created successfully";
@@ -78,10 +77,10 @@ $conn->close();
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="mb-3">
                   <label for="fechareserva" class="form-label">Fecha:</label>
-                  <input type="date"
+                  <input type="datetime"
                     class="form-control" name="fechareserva" id="fechareserva" aria-describedby="helpId" value="2023-10-01" min="2023-10-01" max="2023-12-31" >
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="hora" class="form-label">Hora:</label>
                     <select class="form-select form-select-lg" name="hora" id="hora">
                         <option selected value="0:00">0:00</option>
@@ -109,7 +108,7 @@ $conn->close();
                         <option value="22:00">22:00</option>
                         <option value="23:00">23:00</option>
                     </select>
-                </div>
+                </div> -->
                 <div  hidden class="mb-3">
                   <label for="asunto" class="form-label">Asunto:</label>
                   <input type="text"
