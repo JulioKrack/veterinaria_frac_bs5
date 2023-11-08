@@ -1,3 +1,32 @@
+
+<?php
+include("config/bd.php");
+
+// Verificar si el formulario ha sido enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+    $edad = $_POST["edad"];
+    $tipo = $_POST["tipo"];
+    $raza = $_POST["raza"];
+    $id_cliente = 24;
+    $peso = $_POST["peso"];
+
+
+
+
+    $sql = "INSERT INTO mascota (id, nombre, edad, tipo, raza, id_cliente)
+    VALUES (null, '$nombre', '$edad', '$tipo', '$raza', '$id_cliente')";
+    if ($conn->query($sql) === TRUE) {
+        header("Location:./bienvenido.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }  
+
+}
+// Cerrar la conexión después de obtener los datos
+$conn->close();
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -15,15 +44,57 @@
 
 <body>
   <header>
-    <!-- place navbar here -->
+
   </header>
   <main>
-    <div class="card text-white bg-primary">
-      <img class="card-img-top" src="holder.js/100px180/" alt="Title">
-      <div class="card-body">
-        <h4 class="card-title">Title</h4>
-        <p class="card-text">Text</p>
-      </div>
+    <div class="card col-4 m-auto mt-5">
+        <div class="card-header">
+            <strong>Registrar mascota</strong>
+        </div>
+        <div class="card-body mt-5">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre:</label>
+                  <input type="text"
+                    class="form-control" name="nombre" id="nombre" aria-describedby="helpId" >
+                </div>
+                <div class="mb-3">
+                  <label for="edad" class="form-label">Edad:</label>
+                  <input type="text"
+                    class="form-control" name="edad" id="edad" aria-describedby="helpId" >
+                </div>  
+                <div class="mb-3">
+                  <label for="tipo" class="form-label">Tipo:</label>
+                  <input type="text"
+                    class="form-control" name="tipo" id="tipo" aria-describedby="helpId" >
+                </div>
+                <div class="mb-3">
+                  <label for="raza" class="form-label">Raza:</label>
+                  <input type="text"
+                    class="form-control" name="raza" id="raza" aria-describedby="helpId" >
+                </div>
+                <div class="mb-3">
+                  <label for="peso" class="form-label">Peso:</label>
+                  <input type="text"
+                    class="form-control" name="peso" id="peso" aria-describedby="helpId" >
+                </div>
+
+
+                <div class="mb-3" hidden>
+                  <label for="id_cliente" class="form-label">Cliente:</label>
+                  <input type="text"
+                    class="form-control" name="id_cliente" id="id_cliente" aria-describedby="helpId" value=24>
+                </div>
+
+                <div class="card-footer text-muted">
+                    <input type="submit" class="btn btn-primary" value="Crear"></input>      
+                    <a href="index.php" class="btn btn-secondary">Regresar</a>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
     </div>
   </main>
   <footer>
