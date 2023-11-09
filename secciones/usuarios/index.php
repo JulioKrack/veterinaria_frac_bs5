@@ -42,7 +42,7 @@ $conn->close();
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tabla_id">
             <tr>
                 <th>ID Persona</th>
                 <th>Nombre</th>
