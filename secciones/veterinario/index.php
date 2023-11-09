@@ -63,19 +63,21 @@ $conn->close();
     <div class="card-body">
         <div class="table-responsive-sm">
             <table class="table table-bordered" id="tabla_id">
-            <tr>
-                <th>ID Veterinario</th>
-                <th>ID Persona</th>
-                <th>Nombre</th>
-                <th>DNI</th>
-                <th>Correo</th>
-                <th>Usuario</th>
-                <th>Contraseña</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Estado</th>
+                <thead>
+                    <tr>
+                        <th>ID Veterinario</th>
+                        <th>ID Persona</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th>Correo</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                        <th>Teléfono</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
 
-            </tr>
 
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
