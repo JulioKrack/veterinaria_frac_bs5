@@ -16,16 +16,19 @@
   </script>
 
   <Script>
-    $(document).ready(function () {
-      $('#tabla_id').DataTable({
-        "pageLength": 5,
-        lenghtMenu: [5, 10, 15, 20],
-        "language":{
-          "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-        }
-      });
-    });
+    let miTabla= document.querySelector("#tabla_id");
+    let dataTable = new DataTable(miTabla);
+    // $(document).ready(function () {
+    //   $('#tabla_id').DataTable({
+    //     "pageLength": 5,
+    //     lenghtMenu: [5, 10, 15, 20],
+    //     "language":{
+    //       "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+    //     }
+    //   });
+    // });
   </Script>
+
 </body>
 
 </html>

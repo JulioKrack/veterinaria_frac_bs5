@@ -98,19 +98,20 @@ $conn->close();
 
     // Creamos una función para actualizar los campos del formulario
     function updateFormFields() {
-        let selectedDate = document.getElementById('fecha_disponible').value;
-        let selectedVeterinario = '';
+    let selectedDate = document.getElementById('fecha_disponible').value;
+    let selectedVeterinario = '';
 
-        for (let i = 0; i < reservations.length; i++) {
-            if (reservations[i].fechareserva === selectedDate) {
-                selectedVeterinario = veterinarios[i].nombrevet; // Obtener el nombre del veterinario
-                document.getElementById('id').value = reservations[i].id;
-                document.getElementById('veterinario').value = selectedVeterinario;
-                document.getElementById('id_cliente').value = reservations[i].id_cliente;
-                break;
-            }
+    for (let i = 0; i < reservations.length; i++) {
+        if (reservations[i].id === selectedDate) {
+            selectedVeterinario = veterinarios[i].nombrevet; // Obtener el nombre del veterinario
+            document.getElementById('id').value = reservations[i].id;
+            document.getElementById('veterinario').value = selectedVeterinario;
+            document.getElementById('id_cliente').value = reservations[i].id_cliente;
+            break;
         }
     }
+}
+
 </script>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="col-4">
         <div class="mb-3">
@@ -123,7 +124,7 @@ $conn->close();
             </select>
         </div>
         <!-- Campos adicionales ocultos -->
-        <div class="mb-3" hidden>
+        <div class="mb-3" >
             <label for="veterinario" class="form-label" >Veterinario:</label>
             <input type="text"  class="form-control" name="veterinario" id="veterinario" aria-describedby="helpId" >
         </div>
