@@ -1,6 +1,6 @@
 <?php
 session_start();
-$url_base="http://localhost/veterinaria_frac_bs5/";
+$url_base="http://localhost/veterinaria_frac_bs5/src/";
 
 ?>
 
