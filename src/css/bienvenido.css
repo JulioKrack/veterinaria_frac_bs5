@@ -1,0 +1,19 @@
+.serv1{
+    background-color: rgba(34, 168, 178, 0.816);
+    padding: 45px 40px;
+    border-radius: 20px;
+
+}
+.serv2{
+    background-color: rgba(200, 184, 92, 0.682);
+    padding: 45px 80px;
+    border-radius: 20px;
+}
+.principal{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.imgserv1{
+    margin-left: 50px;
+}

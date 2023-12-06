@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;400&display=swap');
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+*{
+    margin: 0 0;
+    padding: 0 0;
+    font-family: 'Lexend Deca', sans-serif;
+}
+/* El header */
+.titulo{
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 50px;
+}
+
+.hero{
+    background-image: url(../img/fondo-veterinaria.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+    background-position: center;
+    max-width: auto;
+    size: 300px;
+}
+
+.contenedor {
+    background-color: #333;
+    padding: 10px;
+
+  }
+  .navegacion {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 10px;
+  }
+  
+  .navegacion a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .navegacion a:hover {
+    background-color: #555;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .navegacion a:active{
+    background-color: #5AFA90;
+    color:black;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+/* cambias el inicio por el nosotros creas el id="nosotro"para mantener la uniformidad de la barra espero */
+#inicio{
+    background-color: #5AFA90;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;    
+}
+
+.ingreso{
+    display: flex;
+    justify-content: right;
+    padding: 10px;
+    margin: 10px;
+}
+
+.btn-login-registro{
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+    margin: 10px;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+.btn-login-registro:hover{
+    background-color: #5AFA90;
+    color: white;
+    transition: 0.5s;
+}
+
+.pie-pagina{
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+.nuestros-servicios{
+    background-color: #5AFA90;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 20px 0px;
+    text-transform: uppercase;
+    font-size: 20px;
+    transition: 0.5s;
+}
+
+.servicios {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+.servicio {
+  text-align: center;
+  flex: 1;
+  margin: 10px 10px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.servicio:hover{
+  border: 1px solid #5AFA90;
+  transition: 0.5s;
+  background-color: aquamarine;
+}
+
+.servicio-img {
+  width: 200px;
+  height: 200px;
+  transition: 0.5s;
+  display: block;
+}
+/* hoola */
