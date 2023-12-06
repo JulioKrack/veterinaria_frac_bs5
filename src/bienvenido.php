@@ -33,7 +33,7 @@
             <div class="serv1 m-4">
                 <h2><center>Recervación de citas</center></h2> <br>
                 <img src="img/serv1.png" alt="servicio1" class="imgserv1" width="200px">
-                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center" href="reserva-cliente.php" role="button">Reservar Cita </a>
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center" href="reserva-cita.php" role="button">Reservar Cita </a>
             </div>
         
             <div class="serv2 m-4">
