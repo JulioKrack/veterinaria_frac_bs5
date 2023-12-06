@@ -108,7 +108,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
     <div class="card-footer text-muted">
 
 
-    
+     
 
     </div>
 </div>
