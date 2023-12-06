@@ -1,7 +1,7 @@
 <?php
 include("./config/bd.php");
 function getReservaciones($conn) {
-    $sql = "SELECT id,fechareserva,hora,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' WHEN estado=3 THEN 'Atentido' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas where estado=2 or estado=3";
+    $sql = "SELECT id,fechareserva,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -80,7 +80,6 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
             <tr>
                 <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
-                <th>Hora Reservada</th>
                 <th>Descripcion</th>
                 <th hidden>Cliente</th>
                 <th>Veterinario</th>
@@ -92,7 +91,6 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
                 <tr>
                     <td hidden><?php echo $reservation['id']; ?></td>
                     <td><?php echo $reservation['fechareserva']; ?></td>
-                    <td><?php echo $reservation['hora']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
                     <td hidden ><?php echo $reservation['clientes']; ?></td>
                     <td><?php echo $reservation['veterinario']; ?></td>
@@ -108,6 +106,9 @@ $url_base="http://localhost/veterinaria_frac_bs5/";
         
     </div>
     <div class="card-footer text-muted">
+
+
+     
 
     </div>
 </div>
