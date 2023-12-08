@@ -48,6 +48,13 @@
                     <input type="email" placeholder="Correo Electrónico" name="correo" required>
                     <input type="text" placeholder="Usuario" name="usuario" required>
                     <input type="password" placeholder="Contraseña" name="contrasenia" required>
+                    <!-- crear campos para registrar mascota tambien -->
+                    <input type="text" placeholder="Nombre de la mascota" name="nombre_mascota" required>
+                    <input type="number" placeholder="Edad" name="edad" required>
+                    <input type="text" placeholder="Tipo" name="tipo" required>
+                    <input type="text" placeholder="Raza" name="raza" required>
+                    <input type="number" placeholder="Peso" name="peso" required>
+
                     <button type="submit">Registrarse</button>
                 </form>
             </div>

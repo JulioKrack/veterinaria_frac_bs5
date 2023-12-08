@@ -2,49 +2,94 @@
 session_start();
 include("./config/bd.php");
 
+$mensaje = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];
     $contrasenia = $_POST['contrasenia'];
 
-    // Consulta preparada para evitar SQL injection
-    $sql = "SELECT * FROM persona WHERE usuario = ? AND contrasenia = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $usuario, $contrasenia);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Verificar si es un Administrador
+    $sqlAdmin = "SELECT * FROM administrador WHERE usuario = ? AND contrasenia = ?";
+    $stmtAdmin = $conn->prepare($sqlAdmin);
+    $stmtAdmin->bind_param("ss", $usuario, $contrasenia);
+    $stmtAdmin->execute();
+    $resultAdmin = $stmtAdmin->get_result();
 
-    $consulta = "SELECT * FROM persona WHERE usuario='$usuario' AND contrasenia='$contrasenia'";
-    $consultaresult = $conn->query($consulta);
-    $registro = $consultaresult->fetch_assoc();
-    $idUsuario = $registro['id'];
+    if ($resultAdmin->num_rows > 0) {
+        $rowAdmin = $resultAdmin->fetch_assoc();
+        $idUsuario = $rowAdmin['id'];
 
-
-
-    if ($result->num_rows > 0) {
-        // Obtener la primera fila de resultados
-        $row = $result->fetch_assoc();
-        $_SESSION["user_id"] = $row["Id"];
-
-        // Verificar el rol
-        if ($row['rol'] === 'Administrador') {
-            $_SESSION['logeado'] = true;
-            header("Location:./secciones/reservas/index.php?id=$idUsuario"); // Redireccionar a la página de administrador
-            exit();
-        } elseif ($row['rol'] === 'Cliente') {
-            $_SESSION['logeado'] = true;
-            header("Location: ./bienvenido.php?id=$idUsuario"); // Redireccionar a la página de cliente
-            exit();
-        } elseif ($row['rol'] === 'Veterinario') {
-            $_SESSION['logeado'] = true;
-            header("Location: ./veterinario.php?id=$idUsuario"); // Redireccionar a la página de empleado
-            exit();
-        } else {
-            $mensaje = "Rol desconocido";
-        }
-    } else {
-        $mensaje = "Usuario o contraseña incorrectos";
+        $_SESSION['logeado'] = true;
+        header("Location: ./secciones/reservas/index.php?id=$idUsuario"); // Redireccionar a la página de administrador
+        exit();
     }
 
-    $stmt->close();
+    // Verificar si es un Cliente
+    $sqlCliente = "SELECT * FROM cliente WHERE usuario = ? AND contrasenia = ?";
+    $stmtCliente = $conn->prepare($sqlCliente);
+    $stmtCliente->bind_param("ss", $usuario, $contrasenia);
+    $stmtCliente->execute();
+    $resultCliente = $stmtCliente->get_result();
+
+    if ($resultCliente->num_rows > 0) {
+        $rowCliente = $resultCliente->fetch_assoc();
+        $idUsuario = $rowCliente['id'];
+
+        $_SESSION['logeado'] = true;
+        header("Location: ./bienvenido.php?id=$idUsuario"); // Redireccionar a la página de cliente
+        exit();
+    }
+
+    // Verificar si es un Veterinario
+    $sqlVeterinario = "SELECT * FROM veterinario WHERE usuario = ? AND contrasenia = ?";
+    $stmtVeterinario = $conn->prepare($sqlVeterinario);
+    $stmtVeterinario->bind_param("ss", $usuario, $contrasenia);
+    $stmtVeterinario->execute();
+    $resultVeterinario = $stmtVeterinario->get_result();
+
+    if ($resultVeterinario->num_rows > 0) {
+        $rowVeterinario = $resultVeterinario->fetch_assoc();
+        $idUsuario = $rowVeterinario['id'];
+
+        $_SESSION['logeado'] = true;
+        header("Location: ./veterinario.php?id=$idUsuario"); // Redireccionar a la página de veterinario
+        exit();
+    }
+
+    // Si no se encuentra en ninguna tabla, mostrar mensaje de error
+    $mensaje = "Usuario o contraseña incorrectos";
+
+    $stmtAdmin->close();
+    $stmtCliente->close();
+    $stmtVeterinario->close();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tu código para el encabezado -->
+
+    <script>
+        // Función para mostrar una alerta
+        function mostrarAlerta(mensaje) {
+            alert(mensaje);
+            window.location.href = "./login.php";
+        }
+    </script>
+</head>
+<body>
+
+<!-- Tu código HTML -->
+
+<?php if ($mensaje !== "") : ?>
+    <script>
+        // Llama a la función JavaScript para mostrar la alerta
+        mostrarAlerta("<?php echo $mensaje; ?>");
+    </script>
+<?php endif; ?>
+
+<!-- Más código HTML -->
+
+</body>
+</html>
