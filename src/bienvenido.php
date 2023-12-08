@@ -1,4 +1,15 @@
-<?php include("./config/bd.php");?>
+<?php
+session_start(); 
+
+include("./config/bd.php");
+
+// Verifica y asigna un valor por defecto si $idUsuario no está definido o no es un número válido
+$idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+
+// ... Resto del código ...
+
+$conn->close();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +37,7 @@
 
         <div class="m-5">
             <h1><center>Seleccione un servicio</center></h1>
+            <h2>Hola, <span id="nombreUsuario"></span></h2>
         </div>
 
 
@@ -53,6 +65,25 @@
         <?php include("plantillas/footer.php"); ?>
 
     </div>
+    <script>
+        function cargarNombreUsuario() {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("nombreUsuario").innerText = this.responseText;
+                }
+            };
+
+            // Cambia 'saludar.php?id=' por la ruta correcta de tu archivo
+            xhttp.open("GET", "saludar.php?id=<?php echo $idUsuario; ?>", true);
+            xhttp.send();
+        }
+
+        window.onload = function() {
+            cargarNombreUsuario();
+        };
+    </script>
 
 
 </body>

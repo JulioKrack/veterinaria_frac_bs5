@@ -4,9 +4,8 @@ include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getDatosCliente($conn) {
-    $sql = "SELECT c.id, c.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, p.estado 
-    FROM cliente c
-    INNER JOIN persona p ON c.id_persona = p.id";
+    $sql = "SELECT id, nombre, dni, correo, usuario, contrasenia, telefono, rol, 
+    (CASE WHEN estado = 1 THEN 'Activo' ELSE 'Baja' END) AS estados from persona where rol='Cliente';";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -67,7 +66,6 @@ $conn->close();
             <table class="table table-bordered" id="tabla_id">
             <tr>    
                 <th>ID Cliente</th>
-                <th>ID Persona</th>
                 <th>Nombre</th>
                 <th>DNI</th>
                 <th>Correo</th>
@@ -82,7 +80,6 @@ $conn->close();
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
                     <td><?php echo $reservation['id']; ?></td>
-                    <td><?php echo $reservation['id_persona']; ?></td>
                     <td><?php echo $reservation['nombre']; ?></td>
                     <td><?php echo $reservation['dni']; ?></td>
                     <td><?php echo $reservation['correo']; ?></td>
@@ -90,7 +87,7 @@ $conn->close();
                     <td><?php echo $reservation['contrasenia']; ?></td>
                     <td><?php echo $reservation['telefono']; ?></td>
                     <td><?php echo $reservation['rol']; ?></td>
-                    <td><?php echo $reservation['estado']; ?></td>
+                    <td><?php echo $reservation['estados']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>

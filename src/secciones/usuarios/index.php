@@ -4,7 +4,7 @@ include("../../config/bd.php");
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getDatosPersona($conn) {
-    $sql = "SELECT id, nombre, dni, correo, usuario, contrasenia, telefono, rol, estado 
+    $sql = "SELECT id, nombre, dni, correo, usuario, contrasenia, telefono, rol, (CASE WHEN estado = 1 THEN 'Activo' WHEN estado = 2 THEN 'Descanso/vacaciones' ELSE 'Baja' END) AS estados 
     FROM persona;";
     $result = $conn->query($sql);
 
@@ -65,7 +65,7 @@ $conn->close();
                     <td><?php echo $reservation['contrasenia']; ?></td>
                     <td><?php echo $reservation['telefono']; ?></td>
                     <td><?php echo $reservation['rol']; ?></td>
-                    <td><?php echo $reservation['estado']; ?></td>
+                    <td><?php echo $reservation['estados']; ?></td>
                     <td>
                         <a href="editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
                         <a href="index.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Eliminar</a>

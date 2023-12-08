@@ -2,9 +2,9 @@
 include("../../config/bd.php");
 
 function getDatosVeterinario($conn) {
-    $sql = "SELECT v.id, v.id_persona, p.nombre, p.dni, p.correo, p.usuario, p.contrasenia, p.telefono, p.rol, (CASE WHEN p.estado = 1 THEN 'Activo' WHEN p.estado = 2 THEN 'Descanso/vacaciones' ELSE 'Baja' END) AS estados 
-    FROM veterinario v
-    INNER JOIN persona p ON v.id_persona = p.id";
+    $sql = "SELECT id, nombre, dni, correo, usuario, contrasenia, telefono, rol, 
+    (CASE WHEN estado = 1 THEN 'Activo' WHEN estado = 2 THEN 'Descanso/vacaciones' ELSE 'Baja' END) AS estados from persona where rol='Veterinario';";
+
     $result = $conn->query($sql);
 
 
@@ -66,7 +66,6 @@ $conn->close();
                 <thead>
                     <tr>
                         <th>ID Veterinario</th>
-                        <th>ID Persona</th>
                         <th>Nombre</th>
                         <th>DNI</th>
                         <th>Correo</th>
@@ -82,7 +81,6 @@ $conn->close();
             <?php foreach ($reservations as $reservation) : ?>
                 <tr>
                     <td><?php echo $reservation['id']; ?></td>
-                    <td><?php echo $reservation['id_persona']; ?></td>
                     <td><?php echo $reservation['nombre']; ?></td>
                     <td><?php echo $reservation['dni']; ?></td>
                     <td><?php echo $reservation['correo']; ?></td>
