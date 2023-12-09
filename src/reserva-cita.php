@@ -1,9 +1,21 @@
 <?php
 include("./config/bd.php");
+$idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+$_SESSION['idUsuario'] = $idUsuario;
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getReservaciones($conn) {
-    $sql = "SELECT id,fechareserva,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas where estado=1";
+    $sql="SELECT rc.id, rc.fechareserva, rc.asunto,
+    (SELECT nombre FROM cliente WHERE id = rc.id_cliente) as clientes,
+    (SELECT nombre FROM veterinario WHERE id = rc.id_veterinario) as veterinario,
+    (CASE WHEN rc.estado = 1 THEN 'Disponible' WHEN rc.estado= 2 THEN 'Reservado' WHEN rc.estado=3 THEN 'Atendido' ELSE 'Cancelado' END) as estado1,
+    (SELECT m.nombre FROM mascota m 
+     JOIN cliente c ON m.id_cliente = c.id
+     WHERE c.id = rc.id_cliente) as nombre_mascota,
+    (SELECT m.tipo FROM mascota m 
+     JOIN cliente c ON m.id_cliente = c.id
+     WHERE c.id = rc.id_cliente) as tipo_mascota
+    FROM reservadecitas rc where estado=1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -12,16 +24,42 @@ function getReservaciones($conn) {
         return [];
     }
 }
+function actualizarReserva($conn, $id_reserva, $asunto, $id_cliente) {
+    // Verificar si el ID del cliente existe en la tabla cliente
+    $verificacion = $conn->query("SELECT COUNT(*) as count FROM cliente WHERE id = $id_cliente");
+    $resultado = $verificacion->fetch_assoc();
 
-if(isset($_GET['id'])){
-    $id_reserva = $_GET['id'];
-    $sql = "DELETE FROM reservadecitas WHERE id = '$id_reserva'";
-    if ($conn->query($sql) === TRUE) {
-        header("Location:./index.php");
+    if ($resultado['count'] > 0) {
+        // El cliente existe, proceder con la actualización
+        $estado = 2;
+        $sql = "UPDATE reservadecitas SET estado = '$estado', asunto = '$asunto', id_cliente='$id_cliente' WHERE id = '$id_reserva';";
+
+        if ($conn->query($sql) === TRUE) {
+            // Redireccionar sin incluir el ID en la URL
+            header("Location:./bienvenido.php?id=$id_cliente");
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // El cliente no existe, mostrar un mensaje de error o redirigir a alguna página de error
+        echo "Error: El cliente con ID $id_cliente no existe.";
     }
 }
+
+$idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+$_SESSION['idUsuario'] = $idUsuario;
+if (isset($_POST['idr'], $_POST['asunto'])) {
+    $id_reserva = $_POST['idr'];
+    $asunto = $_POST['asunto'];
+    $id_cliente = $_SESSION['idUsuario'];
+
+    // Llamar a la función para actualizar la reserva
+    actualizarReserva($conn, $id_reserva, $asunto, $id_cliente);
+}
+//hacer una funcion que con el id de usuario se acuatice el estado de la cita a 2
+// Obtener el ID de la reserva y el ID del veterinario desde el formulario
+
+
 
 // Obtener todas las reservas existentes
 $reservations = getReservaciones($conn);
@@ -59,10 +97,12 @@ $conn->close();
             <tr>
                 <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
-                <th>Asunto</th>
                 <th>Cliente</th>
+                <th>Nombre Mascota</th>
+                <th>Tipo Mascota</th>
                 <th>Veterinario</th>
                 <th>Estado</th>
+                <th>Descripcion</th>
                 <th>Acciones</th>
             </tr>
 
@@ -70,14 +110,19 @@ $conn->close();
                 <tr>
                     <td hidden><?php echo $reservation['id']; ?></td>
                     <td><?php echo $reservation['fechareserva']; ?></td>
-                    <td>
-                        <?php echo $reservation['asunto']; ?>
-                    </td>
                     <td><?php echo $reservation['clientes']; ?></td>
+                    <td><?php echo $reservation['nombre_mascota']; ?></td>
+                    <td><?php echo $reservation['tipo_mascota']; ?></td>
+                    
                     <td><?php echo $reservation['veterinario']; ?></td>
                     <td><?php echo $reservation['estado1']; ?></td>
                     <td>
-                        <a href="editar-reserva.php?id=<?php echo $reservation['id']; ?>" class="btn btn-primary">Editar</a>
+                        <form action="./reserva-cita.php" method="POST">
+                            <input type="hidden" name="idr" value="<?php echo $reservation['id']; ?>">
+                            <label for="asunto">Asunto:</label>
+                            <input type="text" name="asunto" required>
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                        </form>
                     </td>
                     </tr>
                     
@@ -87,7 +132,7 @@ $conn->close();
         
     </div>
     <div class="card-footer text-muted">
-        <a href="./bienvenido.php" class="btn btn-secondary">Regresar</a>
+        <a href="./bienvenido.php?id=<?php echo $idUsuario;?>" class="btn btn-secondary">Regresar</a>
     </div>
 </div>
 

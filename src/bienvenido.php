@@ -5,9 +5,9 @@ include("./config/bd.php");
 
 // Verifica y asigna un valor por defecto si $idUsuario no está definido o no es un número válido
 $idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-
+$_SESSION['idUsuario'] = $idUsuario;
 // recupera los datos de citas que tiene el usuario con id = $idUsuario
-$sql = $sql = "SELECT rc.fechareserva, rc.hora, rc.asunto, rc.estado, 
+$sql = $sql = "SELECT rc.fechareserva as fecha, rc.hora as hora, rc.asunto as asunto, rc.estado as estado, 
 c.nombre AS cliente, v.nombre AS veterinario,
 m.nombre AS mascota
 FROM reservadecitas rc
@@ -76,7 +76,6 @@ $conn->close();
                 <?php endforeach; ?>
                 </ul>
 
-
             <div class="card-footer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paw-filled" 
                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" 
@@ -96,45 +95,60 @@ $conn->close();
             <div class="serv1 m-4">
                 <h2><center>Reservación de citas</center></h2> <br>
                 <img src="img/serv1.png" alt="servicio1" class="imgserv1" width="200px">
-                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center" href="reserva-cita.php" role="button">Reservar Cita </a>
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center" href="reserva-cita.php?id=<?php echo $idUsuario ; ?>" role="button">Reservar Cita </a>
             </div>
         
             <div class="serv2 m-4">
                 <h2><center>Tienda virtual</center></h2> <br>
                 <img src="img/serv2.png" alt="servicio1" width="200px" >
-                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="productos.php" role="button">Comprar articulos </a>
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="productos.php?id=<?php echo $idUsuario ; ?>" role="button">Comprar articulos </a>
             </div>
             <div hidden class="serv2 m-4">
                 <h2><center>Registrar Mascota</center></h2> <br>
                 <img src="img/serv4.png"  alt="servicio1" width="200px" >
-                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="registrar-mascota.php" role="button">Registrar mascota</a>
+                <a name="" id="" class="btn btn-primary m-3 d-flex justify-content-center " href="registrar-mascota.php?id=<?php echo $idUsuario ; ?>" role="button">Registrar mascota</a>
             </div>
         </div>
 
                 <!-- crear una tabla donde se muestra la cita pendiente -->
                 <div class="m-5">
             <h2><center>Citas pendientes</center></h2>
-            <table id="tablaCitas" class="display" style="width:100%">
+            <table id="tablaCitas" class="display table-primary" style="width:100%">
                 <thead>
-                    <tr>
-                        <th>Fecha</th>
+                    <tr class="table-primary">
+                        <th class="table-primary">Fecha</th>
                         <th>Hora</th>
+                        <th>Asunto</th>
                         <th>Estado</th>
+                        <th>cliente</th>
+                        <th>veterinario</th>
+                        <th>mascota</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($resultado as $reservation) : ?>
                     <tr>
-                        <td>2021-09-01</td>
-                        <td>10:00</td>
-                        <td>Pendiente</td>
+                        <td><?php echo $reservation['fecha']; ?></td>
+                        <td><?php echo $reservation['hora']; ?></td>
+                        <td><?php echo $reservation['asunto']; ?></td>
+                        <td><?php echo $reservation['estado']; ?></td>
+                        <td><?php echo $reservation['cliente']; ?></td>
+                        <td><?php echo $reservation['veterinario']; ?></td>
+                        <td><?php echo $reservation['mascota']; ?></td>
                         <td>
                             <button class="btn btn-danger">Cancelar</button>
                         </td>
+
+
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
-
+        </div>
+        <br>
+        <br>
+        <br>    
 
 
         <?php include("plantillas/footer.php"); ?>

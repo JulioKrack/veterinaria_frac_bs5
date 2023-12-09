@@ -1,4 +1,9 @@
-<?php require_once "config/conexion2.php"; ?>
+<?php require_once "config/bd.php"; 
+
+session_start();
+$idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+$_SESSION['idUsuario'] = $idUsuario;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,13 +43,16 @@
                         
                         
                         <?php
-                        $query = mysqli_query($conexion, "SELECT * FROM categorias");
-                        while ($data = mysqli_fetch_assoc($query)) { ?>
-                            <a href="#" class="nav-link" category="<?php echo $data['categoria']; ?>"><?php echo $data['categoria']; ?></a>
-                        <?php } ?>
+                        $sql = "SELECT categoria FROM categorias";
+                        $res=$conn->query($sql);
+                        //recuperar las categorias de categorias y añadirlas al menu un navlink
+                        foreach ($res as $cat) :
+                        ?>
+                        <a href="#" class="nav-link text-info" category="<?php echo $cat['categoria']; ?>"><?php echo $cat['categoria']; ?></a>
+                        <?php endforeach; ?>
 
                         <!-- <a href="admin/index.php" class="nav-link text-info" category="all"> Administrador</a> -->
-                        <a href="bienvenido.php" class="nav-link " category="all"> Regresar</a>
+                        <a href="bienvenido.php?id=<?php echo $idUsuario;?>" class="nav-link " category="all"> Regresar</a>
                         <a href="index.php" class="nav-link text-info btn-primary text-white" category="all"> Cerrar sesión</a>
                     </ul>
                 </div>
@@ -66,7 +74,7 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <?php
-                $query = mysqli_query($conexion, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria");
+                $query = mysqli_query($conn, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria");
                 $result = mysqli_num_rows($query);
                 if ($result > 0) {
                     while ($data = mysqli_fetch_assoc($query)) { ?>
