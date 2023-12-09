@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST["usuario"];
     $contrasenia = $_POST["contrasenia"];
     $telefono = $_POST["telefono"];
-    $rol = "Cliente";
     $estado = 1;
 
     // recuperar datos de mascota
@@ -19,16 +18,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $raza = $_POST["raza"];
     $peso = $_POST["peso"];
 
+    // hashear la contraseña
+    $contrasenia_hashed = password_hash($contrasenia, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO persona (id, nombre, dni, correo, usuario, contrasenia, telefono, rol , estado)
-    VALUES (null, '$nombre', '$dni', '$correo','$usuario' ,'$contrasenia', '$telefono', '$rol', '$estado')";
+
+    $sql = "INSERT INTO cliente (nombre, dni, correo, usuario, contrasenia, telefono, estado)
+    VALUES ('$nombre', '$dni', '$correo','$usuario' ,'$contrasenia_hashed', '$telefono', '$estado')";
     
     
     
 
     if (mysqli_query($conn, $sql)) {
         $last_id = mysqli_insert_id($conn);
-        $sql2= "INSERT INTO mascota (nombre, edad, tipo, id_persona, raza, peso) VALUES ('$nombre_mascota', $edad, '$tipo', $last_id, '$raza', $peso)";
+        $sql2= "INSERT INTO mascota (id_cliente, nombre, edad, tipo, raza, peso) VALUES ('$last_id', '$nombre_mascota', $edad, '$tipo', '$raza', $peso)";
 
         if(mysqli_query($conn, $sql2)){
             header("Location:./login.php");
