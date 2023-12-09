@@ -25,19 +25,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Verificar si es un Cliente
-    $sqlCliente = "SELECT * FROM cliente WHERE usuario = ? AND contrasenia = ?";
+    $sqlCliente = "SELECT * FROM cliente WHERE usuario = ?";
     $stmtCliente = $conn->prepare($sqlCliente);
-    $stmtCliente->bind_param("ss", $usuario, $contrasenia);
+    $stmtCliente->bind_param("s", $usuario);
     $stmtCliente->execute();
     $resultCliente = $stmtCliente->get_result();
 
     if ($resultCliente->num_rows > 0) {
         $rowCliente = $resultCliente->fetch_assoc();
-        $idUsuario = $rowCliente['id'];
 
-        $_SESSION['logeado'] = true;
-        header("Location: ./bienvenido.php?id=$idUsuario"); // Redireccionar a la página de cliente
-        exit();
+        // Verificar la contraseña usando password_verify
+        if (password_verify($contrasenia, $rowCliente['contrasenia'])) {
+            $idUsuario = $rowCliente['id'];
+
+            $_SESSION['logeado'] = true;
+            header("Location: ./bienvenido.php?id=$idUsuario");
+            exit();
+        } else {
+            $mensaje = "Contraseña incorrecta";
+        }
+    } else {
+        $mensaje = "Usuario o contraseña incorrectos";
     }
 
     // Verificar si es un Veterinario
