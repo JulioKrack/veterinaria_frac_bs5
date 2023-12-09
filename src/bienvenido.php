@@ -7,14 +7,14 @@ include("./config/bd.php");
 $idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
 $_SESSION['idUsuario'] = $idUsuario;
 // recupera los datos de citas que tiene el usuario con id = $idUsuario
-$sql = $sql = "SELECT rc.fechareserva as fecha, rc.hora as hora, rc.asunto as asunto, rc.estado as estado, 
+$sql = $sql = "SELECT rc.id, rc.fechareserva as fecha, rc.hora as hora, rc.asunto as asunto, rc.estado as estado, 
 c.nombre AS cliente, v.nombre AS veterinario,
 m.nombre AS mascota
 FROM reservadecitas rc
 JOIN cliente c ON rc.id_cliente = c.id
 JOIN veterinario v ON rc.id_veterinario = v.id
 LEFT JOIN mascota m ON c.id = m.id_cliente
-WHERE rc.id_cliente = $idUsuario";
+WHERE rc.id_cliente = $idUsuario and rc.estado=2";
 
 // recuperar datos de la mascota
 $sql2 = "SELECT m.nombre as nom, m.tipo as tip, m.raza as raz, m.peso as pes, m.edad as eda
@@ -22,11 +22,28 @@ FROM mascota m
 JOIN cliente c ON m.id_cliente = c.id
 WHERE c.id = $idUsuario";
 
+// hacer que actualize el estado a 3 cuando se cancele la cita
+if (isset($_POST['idr'])) {
+    $id_reserva = $_POST['idr'];
+    $estado = 4;
+    // mantener el id del usuario para que se redirija a la pagina de bienvenida
+    $idUsuario = $_SESSION['idUsuario'];
+    // actualizar el estado de la cita
+    $sql3 = "UPDATE reservadecitas SET estado = '$estado' WHERE id = '$id_reserva';";
+    if ($conn->query($sql3) === TRUE) {
+        // Redireccionar sin incluir el ID en la URL
+        header("Location:./bienvenido.php?id=$idUsuario");
+    } else {
+        echo "Error: " . $sql3 . "<br>" . $conn->error;
+    }
+}
+
 
 $resultado = $conn->query($sql);
 // ... Resto del código ...
 $resultado2= $conn->query($sql2);
 
+// Cerrar la conexión después de obtener los datos
 
 $conn->close();
 ?>
@@ -39,8 +56,7 @@ $conn->close();
     <link rel="stylesheet" href="css/bienvenido.css">
     <title>Document</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />  
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>  
@@ -111,7 +127,8 @@ $conn->close();
         </div>
 
                 <!-- crear una tabla donde se muestra la cita pendiente -->
-                <div class="m-5">
+    <form action="bienvenido.php" method="POST"></form>
+        <div class="m-5">
             <h2><center>Citas pendientes</center></h2>
             <table id="tablaCitas" class="display table-primary" style="width:100%">
                 <thead>
@@ -119,7 +136,7 @@ $conn->close();
                         <th class="table-primary">Fecha</th>
                         <th>Hora</th>
                         <th>Asunto</th>
-                        <th>Estado</th>
+                        <th hidden>Estado</th>
                         <th>cliente</th>
                         <th>veterinario</th>
                         <th>mascota</th>
@@ -128,32 +145,37 @@ $conn->close();
                 </thead>
                 <tbody>
                     <?php foreach ($resultado as $reservation) : ?>
-                    <tr>
-                        <td><?php echo $reservation['fecha']; ?></td>
-                        <td><?php echo $reservation['hora']; ?></td>
-                        <td><?php echo $reservation['asunto']; ?></td>
-                        <td><?php echo $reservation['estado']; ?></td>
-                        <td><?php echo $reservation['cliente']; ?></td>
-                        <td><?php echo $reservation['veterinario']; ?></td>
-                        <td><?php echo $reservation['mascota']; ?></td>
-                        <td>
-                            <button class="btn btn-danger">Cancelar</button>
-                        </td>
-
-
-                    </tr>
+                        <tr>
+                            <td><?php echo $reservation['fecha']; ?></td>
+                            <td><?php echo $reservation['hora']; ?></td>
+                            <td><?php echo $reservation['asunto']; ?></td>
+                            <td hidden><?php echo $reservation['estado']; ?></td>
+                            <td><?php echo $reservation['cliente']; ?></td>
+                            <td><?php echo $reservation['veterinario']; ?></td>
+                            <td><?php echo $reservation['mascota']; ?></td>
+                            <td>
+                                <?php if ($reservation['estado'] == 1 || $reservation['estado'] == 2) : ?>
+                                    <form action="bienvenido.php?id=<?php echo $idUsuario ;?>" method="POST">
+                                        <input type="hidden" name="idr" value="<?php echo $reservation['id']; ?>">
+                                        <button type="submit" class="btn btn-danger">Cancelar</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
-            </table>
+                </table>
+            </div>
+            <br>
+            <br>
+            <br>    
+            
+            
+            
+        </form>
         </div>
-        <br>
-        <br>
-        <br>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-
-        <?php include("plantillas/footer.php"); ?>
-
-    </div>
     <script>
         function cargarNombreUsuario() {
             var xhttp = new XMLHttpRequest();
