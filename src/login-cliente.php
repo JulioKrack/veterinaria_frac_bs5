@@ -49,10 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($resultVeterinario->num_rows > 0) {
         $rowVeterinario = $resultVeterinario->fetch_assoc();
-        $idUsuario = $rowVeterinario['id'];
+        $idVeterinario = $rowVeterinario['id'];
 
         $_SESSION['logeado'] = true;
-        header("Location: ./veterinario.php?id=$idUsuario"); // Redireccionar a la página de veterinario
+        header("Location: ./veterinario.php?id=$idVeterinario"); // Redireccionar a la página de veterinario
         exit();
     }
 

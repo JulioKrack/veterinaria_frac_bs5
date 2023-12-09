@@ -1,7 +1,21 @@
 <?php
 include("./config/bd.php");
-function getReservaciones($conn) {
-    $sql = "SELECT id,fechareserva,asunto,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM cliente where id=id_cliente)) as clientes,(SELECT nombre FROM persona WHERE id=(SELECT id_persona FROM veterinario where id=id_veterinario)) as veterinario, (CASE WHEN estado = 1 THEN 'Disponible' ELSE 'Ocupado' END ) as estado1 FROM reservadecitas";
+$idVeterinario= isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+function getReservaciones($conn, $idVeterinario) {
+    
+    $sql = "SELECT rc.id, rc.fechareserva, rc.asunto,
+    (SELECT nombre FROM cliente WHERE id = rc.id_cliente) as clientes,
+    (SELECT nombre FROM veterinario WHERE id = rc.id_veterinario) as veterinario,
+    (CASE WHEN rc.estado = 1 THEN 'Disponible' WHEN rc.estado= 2 THEN 'Reservado' WHEN rc.estado=3 THEN 'Atendido' ELSE 'Cancelado' END) as estado1,
+    (SELECT m.nombre FROM mascota m 
+     JOIN cliente c ON m.id_cliente = c.id
+     WHERE c.id = rc.id_cliente) as nombre_mascota,
+    (SELECT m.tipo FROM mascota m 
+     JOIN cliente c ON m.id_cliente = c.id
+     WHERE c.id = rc.id_cliente) as tipo_mascota
+    FROM reservadecitas rc WHERE rc.id_veterinario = $idVeterinario";
+
+
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -11,19 +25,26 @@ function getReservaciones($conn) {
     }
 }
 
-if(isset($_GET['id'])){
-    $id_reserva = $_GET['id'];
-    $estado=3;
-    $sql = "UPDATE reservadecitas SET  estado = '$estado' WHERE id = '$id_reserva'; "  ;
+// Obtener el ID de la reserva y el ID del veterinario desde el formulario
+if (isset($_POST['idr'], $_POST['idVeterinario'])) {
+    $id_reserva = $_POST['idr'];
+    $idVeterinario = $_POST['idVeterinario'];
+    
+    $estado = 3;
+    $sql = "UPDATE reservadecitas SET estado = '$estado' WHERE id = '$id_reserva';";
+
     if ($conn->query($sql) === TRUE) {
-        header("Location:./veterinario.php");
+        // Redireccionar sin incluir el ID en la URL
+        header("Location:./veterinario.php?id=$idVeterinario");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
 // Obtener todas las reservas existentes
-$reservations = getReservaciones($conn);
+$reservations = getReservaciones($conn , $idVeterinario);
+
+
 
 // Cerrar la conexión después de obtener los datos
 $conn->close();
@@ -40,7 +61,7 @@ $url_base="http://localhost/veterinaria_frac_bs5/src/";
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Veterinario</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -71,17 +92,21 @@ $url_base="http://localhost/veterinaria_frac_bs5/src/";
 <br />
 <div class="card">
     <div class="card-header">
+        <h2>Hola, <span id="nombreUsuario"></span></h2>
         Reserva de citas 
         <a hidden href="./crear.php" class="btn btn-primary">Crear cita</a>
     </div>
+    <!-- reducir el tamaño de la tabla -->
     <div class="card-body">
-        <div class="table-responsive-sm">
-            <table class="table table-bordered">
+        <div class="table-responsive-sm ">
+            <table class="table table-bordered ">
             <tr>
                 <th hidden>ID Reserva</th>
                 <th>Fecha Reservada</th>
                 <th>Descripcion</th>
-                <th hidden>Cliente</th>
+                <th>Cliente</th>
+                <th>Nombre Mascota</th>
+                <th>Tipo Mascota</th>
                 <th>Veterinario</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -92,11 +117,17 @@ $url_base="http://localhost/veterinaria_frac_bs5/src/";
                     <td hidden><?php echo $reservation['id']; ?></td>
                     <td><?php echo $reservation['fechareserva']; ?></td>
                     <td><?php echo $reservation['asunto']; ?></td>
-                    <td hidden ><?php echo $reservation['clientes']; ?></td>
+                    <td ><?php echo $reservation['clientes']; ?></td>
+                    <td><?php echo $reservation['nombre_mascota']; ?></td>
+                    <td><?php echo $reservation['tipo_mascota']; ?></td>
                     <td><?php echo $reservation['veterinario']; ?></td>
                     <td><?php echo $reservation['estado1']; ?></td>
                     <td>
-                        <a href="veterinario.php?id=<?php echo $reservation['id']; ?>" class="btn btn-danger">Atendido</a>
+                        <form method="post" action="veterinario.php">
+                            <input type="hidden" name="idr" value="<?php echo $reservation['id']; ?>">
+                            <input type="hidden" name="idVeterinario" value="<?php echo $idVeterinario; ?>">
+                            <button type="submit" class="btn btn-danger">Atendido</button>
+                        </form>
                     </td>
                     </tr>
                     
@@ -112,6 +143,25 @@ $url_base="http://localhost/veterinaria_frac_bs5/src/";
 
     </div>
 </div>
+<script>
+        function cargarNombreUsuario() {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("nombreUsuario").innerText = this.responseText;
+                }
+            };
+
+            // Cambia 'saludar.php?id=' por la ruta correcta de tu archivo
+            xhttp.open("GET", "saludarV.php?id=<?php echo $idVeterinario; ?>", true);
+            xhttp.send();
+        }
+
+        window.onload = function() {
+            cargarNombreUsuario();
+        };
+    </script>
 
 
 <?php include("./plantillas/footer.php")?>
