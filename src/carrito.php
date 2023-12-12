@@ -4,7 +4,6 @@ require_once "config/config.php";
 session_start();
 $idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
 $_SESSION['idUsuario'] = $idUsuario;
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,15 +24,13 @@ $_SESSION['idUsuario'] = $idUsuario;
     <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
 </head>
 
-
 <body>
     <!-- Navigation-->
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><h2>VeterinariaFrac</h2></a>
-
-                <a href="productos.php?id=<?php echo $idUsuario; ?>" class="btn btn-primary">Volver a carrito</a>
+                <a id="btnVolverProductos" class="btn btn-primary" href="#">Volver a productos</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -41,8 +38,6 @@ $_SESSION['idUsuario'] = $idUsuario;
         </nav>
     </div>
     <!-- Header-->
-    
-
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
@@ -66,18 +61,14 @@ $_SESSION['idUsuario'] = $idUsuario;
                                     <th>Sub Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="tblCarrito">
-
-                            </tbody>
+                            <tbody id="tblCarrito"></tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-md-5 ms-auto">
                     <h4>Total a Pagar: <span id="total_pagar">0.00</span></h4>
                     <div class="d-grid gap-2">
-
                         <div id="paypal-button-container"></div>
-                        
                         <button class="btn btn-warning" type="button" id="btnVaciar">Vaciar Carrito</button>
                     </div>
                 </div>
@@ -94,11 +85,17 @@ $_SESSION['idUsuario'] = $idUsuario;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="assets/js/jquery-3.6.0.min.js"></script>
-
     <script src="assets/js/scripts.js"></script>
-
     <script>
         mostrarCarrito();
+        $('#btnVolverProductos').click(function(e){
+        e.preventDefault();
+        
+        const idUsuario = <?php echo $idUsuario; ?>;
+        
+        // Redirige a la página de productos con el ID del usuario como parámetro
+        window.location.href = 'productos.php?id=' + idUsuario;
+    });
 
         function mostrarCarrito() {
             if (localStorage.getItem("productos") != null) {
@@ -130,9 +127,6 @@ $_SESSION['idUsuario'] = $idUsuario;
                             $('#tblCarrito').html(html);
                             $('#total_pagar').text(res.total);
 
-
-
-                            
                             paypal.Buttons({
                                 style: {
                                     color: 'blue',
@@ -140,7 +134,6 @@ $_SESSION['idUsuario'] = $idUsuario;
                                     label: 'pay'
                                 },
                                 createOrder: function(data, actions) {
-                                    // This function sets up the details of the transaction, including the amount and line item details.
                                     return actions.order.create({
                                         purchase_units: [{
                                             amount: {
@@ -150,9 +143,7 @@ $_SESSION['idUsuario'] = $idUsuario;
                                     });
                                 },
                                 onApprove: function(data, actions) {
-                                    // This function captures the funds from the transaction.
                                     return actions.order.capture().then(function(details) {
-                                        // This function shows a transaction success message to your buyer.
                                         alert('Transaction completed by ' + details.payer.name.given_name);
                                     });
                                 }
@@ -162,7 +153,6 @@ $_SESSION['idUsuario'] = $idUsuario;
                             console.log(error);
                         }
                     });
-
                 }
             }
         }
