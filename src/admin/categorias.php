@@ -1,19 +1,33 @@
 <?php
 require_once "../config/bd.php";
-if (isset($_POST)) {
-    if (!empty($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) {
         $nombre = $_POST['nombre'];
         $query = mysqli_query($conn, "INSERT INTO categorias(categoria) VALUES ('$nombre')");
         if ($query) {
             header('Location: categorias.php');
+        } else {
+            echo "Error al agregar la categoría.";
         }
     }
 }
+
+
 include("includes/header.php");
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Categorias</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="abrirCategoria"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo</a>
+</div>
+<!-- Formulario para agregar nuevas categorías -->
+<div>
+    <form action="" method="POST" autocomplete="off">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Categoria" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+    </form>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -45,25 +59,5 @@ include("includes/header.php");
         </div>
     </div>
 </div>
-<div id="categorias" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-primary text-white">
-                <h5 class="modal-title" id="title">Nueva Categoria</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST" autocomplete="off">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Categoria" required>
-                    </div>
-                    <button class="btn btn-primary" type="submit">Registrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 <?php include("includes/footer.php"); ?>
