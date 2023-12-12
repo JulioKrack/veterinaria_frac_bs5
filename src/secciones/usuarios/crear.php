@@ -9,38 +9,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correo = $_POST["correo"];
     $usuario = $_POST["usuario"];
     $contrasenia = $_POST["contrasenia"];
-    $telefono = $_POST["telefono"];
     $rol = $_POST["rol"];
-    $estado = $_POST["estado"];
+    $estado = 1;
 
-    $sql = "INSERT INTO persona (id, nombre, dni, correo, usuario, contrasenia, telefono, rol, estado )
-    VALUES (null, '$nombre', '$dni', '$correo', '$usuario', '$contrasenia', '$telefono', '$rol', '$estado')";
-    
-    $sql2= "INSERT INTO cliente (id, id_persona) VALUES (null, LAST_INSERT_ID());";
-    $sql3= "INSERT INTO administrador (id, id_persona) VALUES (null, LAST_INSERT_ID());";
-    $sql4= "INSERT INTO veterinario (id, id_persona) VALUES (null,LAST_INSERT_ID());";
+    // Determinar la tabla según el rol seleccionado
+    switch ($rol) {
+        case 'Cliente':
+            $tabla = 'cliente';
+            break;
+        case 'Administrador':
+            $tabla = 'administrador';
+            break;
+        case 'Veterinario':
+            $tabla = 'veterinario';
+            break;
+        default:
+            echo "Rol no válido";
+            exit;
+    }
+    $contrasenia_hashed = password_hash($contrasenia, PASSWORD_DEFAULT);
+    // Crear un nuevo usuario en la tabla correspondiente
+    $sql = "INSERT INTO $tabla (nombre, dni, correo, usuario, contrasenia, estado)
+            VALUES ('$nombre', '$dni', '$correo', '$usuario', '$contrasenia_hashed', '$estado')";
 
     if ($conn->query($sql) === TRUE) {
-        if($rol == "Cliente" ){
-            $conn->query($sql2);
-            header("Location:./index.php");
-        }
-        else if($rol == "Administrador"){
-            $conn->query($sql3);
-            header("Location:./index.php");
-        }
-        else if($rol == "Veterinario"){
-            $conn->query($sql4);
-            header("Location:./index.php");
-        }
+        header("Location:./index.php");
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }  
+        echo "Error al insertar en la tabla específica: " . $sql . "<br>" . $conn->error;
+    }
 }
+
 // Cerrar la conexión después de obtener los datos
 $conn->close();
-
 ?>
+
     <div class="card">
         <div class="card-header">
             <p class="card-text">Formulario para crear un usuario</p>
@@ -74,23 +76,11 @@ $conn->close();
                     class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" >
                 </div>
                 <div class="mb-3">
-                  <label for="telefono" class="form-label">Teléfono:</label>
-                  <input type="text"
-                    class="form-control" name="telefono" id="telefono" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
                     <label for="rol" class="form-label">Rol:</label>
                     <select class="form-select form-select-lg" name="rol" id="rol">
                         <option selected value="Cliente">Cliente</option>
                         <option value="Administrador">Administrador</option>
                         <option value="Veterinario">Veterinario</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="estado" class="form-label">Estado:</label>
-                    <select class="form-select form-select-lg" name="estado" id="estado">
-                        <option selected value="1">Disponible</option>
-                        <option value="2">Inactivo</option>
                     </select>
                 </div>
                 <div class="card-footer text-muted">

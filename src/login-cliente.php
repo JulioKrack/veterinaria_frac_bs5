@@ -9,19 +9,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasenia = $_POST['contrasenia'];
 
     // Verificar si es un Administrador
-    $sqlAdmin = "SELECT * FROM administrador WHERE usuario = ? AND contrasenia = ?";
+    $sqlAdmin = "SELECT * FROM administrador WHERE usuario = ? ";
     $stmtAdmin = $conn->prepare($sqlAdmin);
-    $stmtAdmin->bind_param("ss", $usuario, $contrasenia);
+    $stmtAdmin->bind_param("s", $usuario);
     $stmtAdmin->execute();
     $resultAdmin = $stmtAdmin->get_result();
 
     if ($resultAdmin->num_rows > 0) {
         $rowAdmin = $resultAdmin->fetch_assoc();
-        $idUsuario = $rowAdmin['id'];
+        //verificar la contraseña usando password_verify
+        if (password_verify($contrasenia, $rowAdmin['contrasenia'])) {
+            $idUsuario = $rowAdmin['id'];
 
-        $_SESSION['logeado'] = true;
-        header("Location: ./secciones/reservas/index.php?id=$idUsuario"); // Redireccionar a la página de administrador
-        exit();
+            $_SESSION['logeado'] = true;
+            header("Location: ./secciones/reservas/index.php?id=$idUsuario"); // Redireccionar a la página de administrador
+            exit();
+        } else {
+            $mensaje = "Contraseña incorrecta";
+        }
+
+    } else {
+    $mensaje = "Usuario o contraseña incorrectos";
     }
 
     // Verificar si es un Cliente
@@ -49,19 +57,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Verificar si es un Veterinario
-    $sqlVeterinario = "SELECT * FROM veterinario WHERE usuario = ? AND contrasenia = ?";
+    $sqlVeterinario = "SELECT * FROM veterinario WHERE usuario = ?";
     $stmtVeterinario = $conn->prepare($sqlVeterinario);
-    $stmtVeterinario->bind_param("ss", $usuario, $contrasenia);
+    $stmtVeterinario->bind_param("s", $usuario);
     $stmtVeterinario->execute();
     $resultVeterinario = $stmtVeterinario->get_result();
 
     if ($resultVeterinario->num_rows > 0) {
         $rowVeterinario = $resultVeterinario->fetch_assoc();
-        $idVeterinario = $rowVeterinario['id'];
+        // Verificar la contraseña usando password_verify
+        if (password_verify($contrasenia, $rowVeterinario['contrasenia'])) {
+            $idUsuario = $rowVeterinario['id'];
 
-        $_SESSION['logeado'] = true;
-        header("Location: ./veterinario.php?id=$idVeterinario"); // Redireccionar a la página de veterinario
-        exit();
+            $_SESSION['logeado'] = true;
+            header("Location: ./veterinario.php?id=$idUsuario"); // Redireccionar a la página de veterinario
+            exit();
+        } else {
+            $mensaje = "Contraseña incorrecta";
+        }
+    }else {
+        $mensaje = "Usuario o contraseña incorrectos";
     }
 
     // Si no se encuentra en ninguna tabla, mostrar mensaje de error

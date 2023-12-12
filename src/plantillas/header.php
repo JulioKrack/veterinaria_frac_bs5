@@ -34,9 +34,9 @@ $url_base="http://localhost/veterinaria_frac_bs5/src/";
       
       <a class="nav-link active" href="<?php echo $url_base?>secciones/usuarios/index.php" aria-current="page">Usuarios</a>
       <a class="nav-link active" href="<?php echo $url_base?>secciones/reservas/index.php" aria-current="page">Citas</a>
-      <a class="nav-link active" href="<?php echo $url_base?>secciones/clientes/index.php" aria-current="page">Clientes</a>
-      <a class="nav-link active" href="<?php echo $url_base?>secciones/veterinario/index.php" aria-current="page">Veterinario</a>
-      <a href="<?php echo $url_base?>admin/index.php" class="nav-link text-info" category="all"> Productos</a>
+      <a hidden class="nav-link active" href="<?php echo $url_base?>secciones/clientes/index.php" aria-current="page">Clientes</a>
+      <a  hidden class="nav-link active" href="<?php echo $url_base?>secciones/veterinario/index.php" aria-current="page">Veterinario</a>
+      <a  hidden href="<?php echo $url_base?>admin/index.php" class="nav-link text-info" category="all"> Productos</a>
       <a class="nav-link active" href="<?php echo $url_base?>" aria-current="page">Cerrar sesión</a>
     </nav>
   </header>
