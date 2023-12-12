@@ -92,6 +92,7 @@ $conn->close();
                             <input type="hidden" name="idr" value="<?php echo $reservation['id']; ?>">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
+                        <a href="./editar.php?id=<?php echo $reservation['id']; ?>" class="btn btn-warning">Editar</a>
                     </td>
                     </tr>
                     
