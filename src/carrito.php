@@ -125,7 +125,7 @@ $_SESSION['idUsuario'] = $idUsuario;
                             `;
                             });
                             $('#tblCarrito').html(html);
-                            $('#total_pagar').text(res.total);
+                            $('#total_pagar').text(res.total.toFixed(2));
 
                             paypal.Buttons({
                                 style: {
