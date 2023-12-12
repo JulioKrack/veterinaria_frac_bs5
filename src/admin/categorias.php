@@ -1,9 +1,9 @@
 <?php
-require_once "../config/conexion2.php";
+require_once "../config/bd.php";
 if (isset($_POST)) {
     if (!empty($_POST)) {
         $nombre = $_POST['nombre'];
-        $query = mysqli_query($conexion, "INSERT INTO categorias(categoria) VALUES ('$nombre')");
+        $query = mysqli_query($conn, "INSERT INTO categorias(categoria) VALUES ('$nombre')");
         if ($query) {
             header('Location: categorias.php');
         }
@@ -28,7 +28,7 @@ include("includes/header.php");
                 </thead>
                 <tbody>
                     <?php
-                    $query = mysqli_query($conexion, "SELECT * FROM categorias ORDER BY id DESC");
+                    $query = mysqli_query($conn, "SELECT * FROM categorias ORDER BY id DESC");
                     while ($data = mysqli_fetch_assoc($query)) { ?>
                         <tr>
                             <td><?php echo $data['id']; ?></td>

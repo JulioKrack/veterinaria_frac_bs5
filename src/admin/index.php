@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+// Incluir el archivo de configuración de la base de datos
+require_once "../config/bd.php";
+
 if (!empty($_SESSION['active'])) {
     header('location: productos.php');
 } else {
@@ -13,22 +17,35 @@ if (!empty($_SESSION['active'])) {
                         </button>
                     </div>';
         } else {
-            require_once "../config/conexion2.php";
-            $user = mysqli_real_escape_string($conexion, $_POST['usuario']);
-            $clave = md5(mysqli_real_escape_string($conexion, $_POST['clave']));
-            $query = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$user' AND clave = '$clave'");
-            mysqli_close($conexion);
+            // Utilizar la conexión desde el archivo de configuración
+            $user = mysqli_real_escape_string($conn, $_POST['usuario']);
+            $clave = mysqli_real_escape_string($conn, $_POST['clave']);
+
+            $query = mysqli_query($conn, "SELECT * FROM administrador WHERE usuario = '$user'");
             $resultado = mysqli_num_rows($query);
+
             if ($resultado > 0) {
                 $dato = mysqli_fetch_array($query);
-                $_SESSION['active'] = true;
-                $_SESSION['id'] = $dato['id'];
-                $_SESSION['nombre'] = $dato['nombre'];
-                $_SESSION['user'] = $dato['usuario'];
-                header('Location: productos.php');
+
+                // Verificar la contraseña con password_verify
+                if (password_verify($clave, $dato['contrasenia'])) {
+                    $_SESSION['active'] = true;
+                    $_SESSION['id'] = $dato['id'];
+                    $_SESSION['nombre'] = $dato['nombre'];
+                    $_SESSION['user'] = $dato['usuario'];
+                    header('Location: productos.php');
+                } else {
+                    $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+                        Contraseña incorrecta
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                    session_destroy();
+                }
             } else {
                 $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-                        Contraseña incorrecta
+                        Usuario no encontrado
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -38,6 +55,9 @@ if (!empty($_SESSION['active'])) {
         }
     }
 }
+
+// Cerrar la conexión después de usarla
+mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">

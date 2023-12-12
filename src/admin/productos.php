@@ -1,5 +1,5 @@
 <?php
-require_once "../config/conexion2.php";
+require_once "../config/bd.php";
 
 if (isset($_POST)) {
     if (!empty($_POST)) {
@@ -15,7 +15,7 @@ if (isset($_POST)) {
         $fecha = date("YmdHis");
         $foto = $fecha . ".jpg";
         $destino = "../assets/img/" . $foto;
-        $query = mysqli_query($conexion, "INSERT INTO productos(nombre, descripcion, precio_normal, precio_rebajado, cantidad, imagen, id_categoria) VALUES ('$nombre', '$descripcion', '$p_normal', '$p_rebajado', $cantidad, '$foto', $categoria)");
+        $query = mysqli_query($conn, "INSERT INTO productos(nombre, descripcion, precio_normal, precio_rebajado, cantidad, imagen, id_categoria) VALUES ('$nombre', '$descripcion', '$p_normal', '$p_rebajado', $cantidad, '$foto', $categoria)");
         if ($query) {
             if (move_uploaded_file($tmpname, $destino)) {
                 header('Location: productos.php');
@@ -46,7 +46,7 @@ include("includes/header.php"); ?>
                 </thead>
                 <tbody>
                     <?php
-                    $query = mysqli_query($conexion, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria ORDER BY p.id DESC");
+                    $query = mysqli_query($conn, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria ORDER BY p.id DESC");
                     while ($data = mysqli_fetch_assoc($query)) { ?>
                         <tr>
                             <td><img class="img-thumbnail" src="../assets/img/<?php echo $data['imagen']; ?>" width="50"></td>
@@ -115,7 +115,7 @@ include("includes/header.php"); ?>
                                 <label for="categoria">Categoria</label>
                                 <select id="categoria" class="form-control" name="categoria" required>
                                     <?php
-                                    $categorias = mysqli_query($conexion, "SELECT * FROM categorias");
+                                    $categorias = mysqli_query($conn, "SELECT * FROM categorias");
                                     foreach ($categorias as $cat) { ?>
                                         <option value="<?php echo $cat['id']; ?>"><?php echo $cat['categoria']; ?></option>
                                     <?php } ?>
