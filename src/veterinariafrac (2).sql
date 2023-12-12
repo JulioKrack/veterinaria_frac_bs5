@@ -109,23 +109,6 @@ CREATE TABLE `mascota` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `persona`
---
-
-CREATE TABLE `persona` (
-  `id` int(8) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `dni` int(8) NOT NULL,
-  `correo` varchar(255) NOT NULL,
-  `usuario` varchar(255) NOT NULL,
-  `contrasenia` varchar(255) NOT NULL,
-  `telefono` int(9) NOT NULL,
-  `rol` varchar(255) NOT NULL,
-  `estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `productos`

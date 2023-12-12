@@ -1,107 +1,104 @@
-<?php include("../../plantillas/header.php")?>
 <?php
 include("../../config/bd.php");
 
-if(isset($_GET['id'])){
+if(isset($_GET['id']) && isset($_GET['tabla'])){
     $id_persona = $_GET['id'];
-    $sql = "SELECT * FROM persona WHERE id = '$id_persona'";
-    $result = $conn->query($sql);
-    $registro = $result->fetch_assoc();
-    $id = $registro['id'];
-    $nombre = $registro['nombre'];
-    $dni = $registro['dni'];
-    $correo = $registro['correo'];
-    $usuario = $registro['usuario'];
-    $contrasenia = $registro['contrasenia'];
-    $telefono = $registro['telefono'];
-    $rol = $registro['rol'];
-    $estado = $registro['estado'];
-}
-// Verificar si el formulario ha sido enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id= $_POST['id'];
-    $nombre = $_POST["nombre"];
-    $dni = $_POST["dni"];
-    $correo = $_POST["correo"];
-    $usuario = $_POST["usuario"];
-    $contrasenia = $_POST["contrasenia"];
-    $telefono = $_POST["telefono"];
-    $rol = $_POST["rol"];
-    $estado = $_POST["estado"];
+    $tabla = $_GET['tabla'];
 
-    $sql = "UPDATE persona SET nombre = '$nombre', dni = '$dni', correo = '$correo', usuario = '$usuario', contrasenia = '$contrasenia', telefono = '$telefono', rol = '$rol', estado = '$estado' WHERE id = '$id';";
-    
-    if ($conn->query($sql) === TRUE) {
-        header("Location:./index.php");
+    // Ajusta la consulta según la tabla
+    $sql = "SELECT * FROM $tabla WHERE id = '$id_persona'";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $registro = $result->fetch_assoc();
+
+        // Aquí obtienes los datos específicos de la tabla
+        $id = $registro['id'];
+        $nombre = $registro['nombre'];
+        $dni = $registro['dni'];
+        $correo = $registro['correo'];
+        $usuario = $registro['usuario'];
+        $contrasenia = $registro['contrasenia'];
+        $estado = $registro['estado'];
+        // ... (continúa con los demás campos según tu estructura de tabla)
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
+
+    // Resto del código para actualizar la base de datos
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recoge los datos del formulario
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $dni = $_POST['dni'];
+        $correo = $_POST['correo'];
+        $usuario = $_POST['usuario'];
+        $contrasenia = $_POST['contrasenia'];
+        $estado = $_POST['estado'];
+
+        // Actualiza los datos en la base de datos
+        $sql = "UPDATE $tabla SET nombre = '$nombre', dni = '$dni', correo = '$correo', usuario = '$usuario', contrasenia = '$contrasenia', estado = '$estado' WHERE id = '$id'";
+        
+        if ($conn->query($sql) === TRUE) {
+            // Redirige a la página de índice después de la actualización
+            header("Location:./index.php");
+        } else {
+            echo "Error al actualizar: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+} else {
+    echo "Error: No se proporcionó el nombre de la tabla.";
 }
 
 $conn->close();
 ?>
-    <div class="card">
-        <div class="card-header">
-            <p class="card-text">Formulario para editar un usuario.</p>
-        </div>
-        <div class="card-body">
-    <!-- Formulario para insertar datos -->
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <div class="mb-3">
-                  <label for="id" class="form-label">ID:</label>
-                  <input type="text" readonly value="<?php echo $id; ?>"
-                    class="form-control" readonly name="id" id="id" aria-describedby="helpId">
-                <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre Completo:</label>
-                  <input type="text"  value="<?php echo $nombre; ?>"
-                    class="form-control" name="nombre" id="nombre" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
-                  <label for="dni" class="form-label">DNI:</label>
-                  <input type="text" value="<?php echo $dni; ?>"
-                    class="form-control" name="dni" id="dni" aria-describedby="helpId" >
-                </div>  
-                <div class="mb-3">
-                  <label for="correo" class="form-label">Correo:</label>
-                  <input type="text" value="<?php echo $correo; ?>"
-                    class="form-control" name="correo" id="correo" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
-                  <label for="usuario" class="form-label">Usuario:</label>
-                  <input type="text" value="<?php echo $usuario; ?>"
-                    class="form-control" name="usuario" id="usuario" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
-                  <label for="contrasenia" class="form-label">Contraseña:</label>
-                  <input type="text" value="<?php echo $contrasenia; ?>"
-                    class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
-                  <label for="telefono" class="form-label">Teléfono:</label>
-                  <input type="text" value="<?php echo $telefono; ?>"
-                    class="form-control" name="telefono" id="telefono" aria-describedby="helpId" >
-                </div>
-                <div class="mb-3">
-                    <label for="rol" class="form-label">Rol:</label>
-                    <select class="form-select form-select-lg" name="rol" id="rol">
-                        <option selected value="<?php echo $rol; ?>"><?php echo $rol; ?></option>
-                        <option selected value="Cliente">Cliente</option>
-                        <option value="Administrador">Administrador</option>
-                        <option value="veterinario">Veterinario</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="estado" class="form-label">Estado:</label>
-                    <select class="form-select form-select-lg" name="estado" id="estado">
-                        <option selected value="1">Disponible</option>
-                        <option value="2">Inactivo</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-                <a href="index.php" class="btn btn-secondary">Regresar</a>
-            </form>      
-        </div>
-        <div class="card-footer text-muted"></div>
+
+
+<?php include("../../plantillas/header.php")?>
+
+<div class="card">
+    <div class="card-header">
+        <p class="card-text">Formulario para editar un usuario.</p>
     </div>
+    <div class="card-body">
+        <!-- Formulario para editar datos -->
+        <form action="<?php echo $_SERVER['PHP_SELF'] . "?id=$id_persona&tabla=$tabla"; ?>" method="post">
+            <div class="mb-3">
+                <label for="id" class="form-label">ID:</label>
+                <input type="text" readonly value="<?php echo $id; ?>"
+                       class="form-control" readonly name="id" id="id" aria-describedby="helpId">
+            </div>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre Completo:</label>
+                <input type="text" value="<?php echo $nombre; ?>"
+                       class="form-control" name="nombre" id="nombre" aria-describedby="helpId" required>
+            </div>
+            <div class="mb-3">
+                <label for="dni" class="form-label">DNI:</label>
+                <input type="text" value="<?php echo $dni; ?>"
+                       class="form-control" name="dni" id="dni" aria-describedby="helpId" required>
+            </div>
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo:</label>
+                <input type="text" value="<?php echo $correo; ?>"
+                       class="form-control" name="correo" id="correo" aria-describedby="helpId" required>
+            </div>
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario:</label>
+                <input type="text" value="<?php echo $usuario; ?>"
+                       class="form-control" name="usuario" id="usuario" aria-describedby="helpId" required>
+            </div>
+            <div class="mb-3">
+                <label for="contrasenia" class="form-label">Contraseña:</label>
+                <input type="text" value="<?php echo $contrasenia; ?>"
+                       class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="index.php" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
 
 <?php include("../../plantillas/footer.php")?>
