@@ -1,6 +1,8 @@
-<?php require_once "config/bd.php"; 
-
+<?php require_once "config/bd.php"; ?>
+<?php require_once "config/config.php"; ?>
+<?php
 session_start();
+
 $idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
 $_SESSION['idUsuario'] = $idUsuario;
 ?>
@@ -43,16 +45,13 @@ $_SESSION['idUsuario'] = $idUsuario;
                         
                         
                         <?php
-                        $sql = "SELECT categoria FROM categorias";
-                        $res=$conn->query($sql);
-                        //recuperar las categorias de categorias y añadirlas al menu un navlink
-                        foreach ($res as $cat) :
-                        ?>
-                        <a href="#" class="nav-link text-info" category="<?php echo $cat['categoria']; ?>"><?php echo $cat['categoria']; ?></a>
-                        <?php endforeach; ?>
+                        $query = mysqli_query($conn, "SELECT * FROM categorias");
+                        while ($data = mysqli_fetch_assoc($query)) { ?>
+                            <a href="#" class="nav-link" category="<?php echo $data['categoria']; ?>"><?php echo $data['categoria']; ?></a>
+                        <?php } ?>
 
                         <!-- <a href="admin/index.php" class="nav-link text-info" category="all"> Administrador</a> -->
-                        <a href="bienvenido.php?id=<?php echo $idUsuario;?>" class="nav-link " category="all"> Regresar</a>
+                        <a href="bienvenido.php?id=<?php echo $idUsuario; ?>" class="nav-link " category="all"> Regresar</a>
                         <a href="index.php" class="nav-link text-info btn-primary text-white" category="all"> Cerrar sesión</a>
                     </ul>
                 </div>

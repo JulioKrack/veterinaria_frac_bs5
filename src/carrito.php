@@ -1,6 +1,10 @@
 <?php 
-require_once "config/conexion2.php";
+require_once "config/bd.php";
 require_once "config/config.php";
+session_start();
+$idUsuario = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+$_SESSION['idUsuario'] = $idUsuario;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,20 +26,6 @@ require_once "config/config.php";
 </head>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <body>
     <!-- Navigation-->
     <div class="container">
@@ -43,7 +33,7 @@ require_once "config/config.php";
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><h2>VeterinariaFrac</h2></a>
 
-                <a href="productos.php" class="btn btn-primary">Volver a carrito</a>
+                <a href="productos.php?id=<?php echo $idUsuario; ?>" class="btn btn-primary">Volver a carrito</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
