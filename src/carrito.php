@@ -87,15 +87,25 @@ $_SESSION['idUsuario'] = $idUsuario;
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-        mostrarCarrito();
+    $(document).ready(function() {
+        // Manejar el clic en el botón "Vaciar Carrito"
+        $('#btnVaciar').click(function() {
+            // Vaciar el carrito en localStorage
+            localStorage.removeItem('productos');
+
+            // Actualizar la vista del carrito
+            mostrarCarrito();
+            location.reload();
+        });
+
         $('#btnVolverProductos').click(function(e){
-        e.preventDefault();
-        
-        const idUsuario = <?php echo $idUsuario; ?>;
-        
-        // Redirige a la página de productos con el ID del usuario como parámetro
-        window.location.href = 'productos.php?id=' + idUsuario;
-    });
+            e.preventDefault();
+            
+            const idUsuario = <?php echo $idUsuario; ?>;
+            
+            // Redirige a la página de productos con el ID del usuario como parámetro
+            window.location.href = 'productos.php?id=' + idUsuario;
+        });
 
         function mostrarCarrito() {
             if (localStorage.getItem("productos") != null) {
@@ -115,14 +125,14 @@ $_SESSION['idUsuario'] = $idUsuario;
                             let html = '';
                             res.datos.forEach(element => {
                                 html += `
-                            <tr>
-                                <td>${element.id}</td>
-                                <td>${element.nombre}</td>
-                                <td>${element.precio}</td>
-                                <td>1</td>
-                                <td>${element.precio}</td>
-                            </tr>
-                            `;
+                                <tr>
+                                    <td>${element.id}</td>
+                                    <td>${element.nombre}</td>
+                                    <td>${element.precio}</td>
+                                    <td>1</td>
+                                    <td>${element.precio}</td>
+                                </tr>
+                                `;
                             });
                             $('#tblCarrito').html(html);
                             $('#total_pagar').text(res.total.toFixed(2));
@@ -156,7 +166,11 @@ $_SESSION['idUsuario'] = $idUsuario;
                 }
             }
         }
-    </script>
+
+        // Mostrar el carrito al cargar la página
+        mostrarCarrito();
+    });
+</script>
 </body>
 
 </html>
