@@ -133,41 +133,52 @@ include("includes/header.php");
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var form = document.querySelector('form');
-        var btnEditar = document.querySelectorAll('.btn-editar');
+$(document).ready(function () {
+        // Manejar el clic en los botones "Agregar al Carrito"
+        $('.btn-outline-dark').click(function () {
+            // Obtener datos del producto
+            var id = $(this).data('id');
+            var nombre = $(this).data('nombre');
+            var precio = $(this).data('precio');
 
-        btnEditar.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var productoId = this.getAttribute('data-id');
+            // Crear objeto producto
+            var producto = {
+                id: id,
+                nombre: nombre,
+                precio: precio,
+                cantidad: 1
+            };
 
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'obtener_producto.php?id=' + productoId, true);
+            // Obtener productos del carrito desde localStorage
+            var productosCarrito = JSON.parse(localStorage.getItem('productos')) || [];
 
-                xhr.onload = function () {
-                    if (xhr.status === 200) {
-                        var producto = JSON.parse(xhr.responseText);
-
-                        form.nombre.value = producto.nombre;
-                        form.cantidad.value = producto.cantidad;
-                        form.descripcion.value = producto.descripcion;
-                        form.p_normal.value = producto.precio_normal;
-                        form.p_rebajado.value = producto.precio_rebajado;
-                        form.categoria.value = producto.id_categoria;
-
-                        // Actualizar el valor del campo oculto "producto_id"
-                        form.producto_id.value = producto.id;
-
-                        // Puedes agregar más campos según sea necesario
-                    }
-                };
-
-                xhr.send();
+            // Verificar si el producto ya está en el carrito
+            var productoExistente = productosCarrito.find(function (item) {
+                return item.id === id;
             });
+
+            // Si el producto existe, incrementar la cantidad
+            if (productoExistente) {
+                // Aquí puedes verificar la cantidad disponible
+                if (productoExistente.cantidad >= MAX_CANTIDAD_DISPONIBLE) {
+                    alert('No se pueden agregar más unidades de este producto.');
+                    return;
+                }
+
+                productoExistente.cantidad++;
+            } else {
+                // Si no existe, agregar el producto al carrito
+                productosCarrito.push(producto);
+            }
+
+            // Guardar productos en localStorage
+            localStorage.setItem('productos', JSON.stringify(productosCarrito));
         });
 
-        // Inicializar DataTable después de cargar los datos
-        var dataTable = new DataTable("#myTable");
+        // Redirigir al carrito al hacer clic en "Ir al Carrito"
+        $('#btnIrCarrito').click(function () {
+            window.location.href = "carrito.php?id=<?php echo $idUsuario; ?>";
+        });
     });
 </script>
 

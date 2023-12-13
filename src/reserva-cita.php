@@ -7,7 +7,7 @@ $_SESSION['idUsuario'] = $idUsuario;
 
 // Función para obtener todas las reservas de citas desde la base de datos
 function getReservaciones($conn) {
-    $sql = "SELECT rc.id, rc.fechareserva, rc.asunto,
+    $sql = "SELECT rc.id, rc.fechareserva,rc.hora, rc.asunto,
     (SELECT nombre FROM cliente WHERE id = rc.id_cliente) as clientes,
     (SELECT nombre FROM veterinario WHERE id = rc.id_veterinario) as veterinario,
     (CASE WHEN rc.estado = 1 THEN 'Disponible' WHEN rc.estado = 2 THEN 'Reservado' WHEN rc.estado = 3 THEN 'Atendido' ELSE 'Cancelado' END) as estado1,
@@ -60,19 +60,21 @@ $conn->close();
                     <tr>
                         <th hidden>ID Reserva</th>
                         <th>Fecha Reservada</th>
+                        <th>Hora</th>
                         <th>Cliente</th>
                         <th>Nombre Mascota</th>
                         <th>Tipo Mascota</th>
                         <th>Veterinario</th>
                         <th>Estado</th>
                         <th>Descripcion</th>
-                        <th>Acciones</th>
+                        <th hidden>Acciones</th>
                     </tr>
                     <tbody>
                         <?php foreach ($reservations as $reservation) : ?>
                             <tr>
                                 <td hidden><?php echo $reservation['id']; ?></td>
                                 <td><?php echo $reservation['fechareserva']; ?></td>
+                                <td><?php echo $reservation['hora']; ?></td>
                                 <td><?php echo $reservation['clientes']; ?></td>
                                 <td><?php echo $reservation['nombre_mascota']; ?></td>
                                 <td><?php echo $reservation['tipo_mascota']; ?></td>

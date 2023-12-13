@@ -89,14 +89,15 @@ $_SESSION['idUsuario'] = $idUsuario;
     <script>
     $(document).ready(function() {
         // Manejar el clic en el botón "Vaciar Carrito"
-        $('#btnVaciar').click(function() {
-            // Vaciar el carrito en localStorage
-            localStorage.removeItem('productos');
+        $('#btnVaciar').click(function () {
+        // Vaciar el carrito en localStorage
+        localStorage.removeItem('productos');
 
-            // Actualizar la vista del carrito
-            mostrarCarrito();
-            location.reload();
-        });
+        // Actualizar la vista del carrito
+        mostrarCarrito();
+        location.reload();
+    });
+
 
         $('#btnVolverProductos').click(function(e){
             e.preventDefault();
